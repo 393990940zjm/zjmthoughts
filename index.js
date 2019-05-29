@@ -179,7 +179,7 @@ function showTable() {
 };
 
 
-AV.Query.doCloudQuery('select * from article where type = 1 order by createdDate desc').then(function (data) {
+AV.Query.doCloudQuery('select * from article where type = 2 order by createdDate desc').then(function (data) {
     console.log(data);
     $('#table').bootstrapTable('load',data.results);
 }, function (error) {
