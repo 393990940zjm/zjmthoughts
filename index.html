@@ -2,23 +2,90 @@
 <html lang="cn-ZH">
 <head>
     <meta charset="UTF-8">
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
     <title></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/bootstrap-table.css" />
     <link rel="stylesheet" href="index.css" />
 </head>
-<body> 
-	<div class="container">
+<body>
+	<div class="head" >
+		<div class="head_logo" >思绪隽永</div>
+		<div class="head_menu active" onclick="toWz(this,1)" >随想</div>		
+		<div class="head_menu" onclick="toWz(this,2)" >杂文</div>		
+		<div class="head_liuyan" onclick="toDiss()" ></div>		
+		<div class="head_about" onclick="toAbout()" ></div>		
+	</div>
+	<div class="container" id="article1" >
 		<div class="row" >
 		    <div class="col-xs-12 col-sm-12" >
-	    		<!-- <button class="btn btn-default" onclick="toRj()" >日记</button> -->
-				<button class="btn btn-default" onclick="toWz()" >文章</button>
 				<table id="table" class="table table-hover" ></table>
 		    </div>
 		</div>
 	</div>
+	<div class="container" id="article2" style="display: none;" >
+		<div class="row" >
+		    <div class="col-xs-12 col-sm-12" >
+				<div class="dissTaskIn" >
+					<p class="title" >留言板</p>
+					<div class="dissTaskInContent" >
+						<textarea id="dissIn" ></textarea>
+					</div>
+					<div class="dissTaskInFloor" >
+						<button class="btn btn-success" onclick="addDiss()" >提交</button>
+					</div>
+				</div>
+				<div class="dissTaskContent" >
+				</div>	
+		    </div>
+		</div>
+	</div>
 	<iframe id="childPage" src="" ></iframe>
+	<!-- 模态框（Modal） -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	                <h4 class="modal-title" id="myModalLabel">关于我</h4>
+	            </div>
+	            <div class="modal-body">
+	            	<img width="100%" src="ewm.jpg" />
+	            </div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+	            </div>
+	        </div><!-- /.modal-content -->
+	    </div><!-- /.modal -->
+	</div>
+	<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	                <h4 class="modal-title" id="myModalLabel">通知</h4>
+	            </div>
+	            <div class="modal-body">
+	            	<p>缘分很奇妙，它会引领你见到不同的人，看到不一样的世界，然后经历很多匪夷所思的事情。</p>
+	            	<p>那些深藏在你心里的故事，会在一个巧合的时间浮现出来，打破你某一个平静的夜晚。</p>
+	            	<p>巧合的是，你闯入了这里。</p>
+	            	<p>但是不用害怕，这里没有可怕的怪叔叔和卖小女孩的火柴，同样也没有可怕的成人世界。</p>
+	            	<p>在这里，大家是自由的。</p>
+	            	<p>你们大可自由探索文字里的秘密，也许你可以找到心中的疑惑，或者得到一丝共鸣。</p>
+	            	<p>没有关系，我们不讲大道理，我们只说心事。</p>
+	            	<p>欢迎进入，心灵的世界~</p>	  
+	            	
+	            	<p style="margin-top: 50px;" >网站正在努力开发完善中~希望多评论，多留言，提供宝贵的意见~</p>
+	            </div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+	            </div>
+	        </div><!-- /.modal-content -->
+	    </div><!-- /.modal -->
+	</div>
 </body>
 <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.12.0/dist/av-min.js"></script>
 <script type="text/javascript" src="js/jquery-1.11.2.min.js" ></script>

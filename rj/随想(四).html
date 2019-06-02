@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="../css/bootstrap.min.css" />
+		<link rel="stylesheet" href="../css/childPage.css" />
+	</head>
+	<body>
+		<button class="btn btn-default" onclick="back()" >返回</button>
+		<div class="container">
+		    <div class="row" >
+		        <div class="col-xs-12 col-sm-12" >
+            		<h1>随想(四)</h1>
+<p>
+90后是最需要包办婚姻的一代人，生活已经压力巨大了，就不要再经历那么多感情的摧残。90后并不关心恋爱自由，他们要的是能够理直气壮的谈一场不分手的恋爱……
+</p>
+					
+					
+					<h3 style="border-bottom: 1px solid #000000;" >评论<button class="btn btn-default" onclick="alertDiss()" style="margin-left: 10px;margin-top: -5px;" >发布</button></h3>
+					<div class="dissTaskContent" >
+					</div>
+		        </div>
+ 		</div>
+	</div>
+	<!-- 模态框（Modal） -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	                <h4 class="modal-title" id="myModalLabel">评论</h4>
+	            </div>
+	            <div class="modal-body">
+	            	<textarea id="dissIn" ></textarea>
+	            </div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+	                <button type="button" class="btn btn-primary" onclick="addDiss()" >提交更改</button>
+	            </div>
+	        </div><!-- /.modal-content -->
+	    </div><!-- /.modal -->
+	</div>
+	</body>
+	<script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.12.0/dist/av-min.js"></script>
+	<script type="text/javascript" src="../js/jquery-1.11.2.min.js" ></script>
+	<script type="text/javascript" src="../js/bootstrap.min.js" ></script>
+	<script type="text/javascript" src="../js/childPage.js" ></script>
+</html>

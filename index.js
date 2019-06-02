@@ -1,3 +1,28 @@
+//window.onload = function(){
+//   //屏蔽键盘事件
+//   document.onkeydown = function (){
+//       var e = window.event || arguments[0];
+//      //F12
+//       if(e.keyCode == 123){
+//           return false;
+//       //Ctrl+Shift+I
+//       }else if((e.ctrlKey) && (e.shiftKey) && (e.keyCode == 73)){
+//           return false;
+//       //Shift+F10
+//       }else if((e.shiftKey) && (e.keyCode == 121)){
+//           return false;
+//       //Ctrl+U
+//       }else if((e.ctrlKey) && (e.keyCode == 85)){
+//           return false;
+//       }
+//   };
+//   //屏蔽鼠标右键
+//   document.oncontextmenu = function (){
+//       return false;
+//   }
+// }
+
+
 var APP_ID = '{{appid}}';
 var APP_KEY = '{{appkey}}';
  
@@ -6,7 +31,7 @@ AV.init({
   appKey: 'yLASWKfAAaOnLc9toHMTq4K6'
 });
 
-var flag_type = 2;
+var flag_type = 1;
 
 //var TestObject = AV.Object.extend('TestObject');
 //var testObject = new TestObject();
@@ -74,34 +99,25 @@ var flag_type = 2;
 
 
 function operate(value, row, index) {
-	var str = "";
-	 str += "<button class='btn btn-info btn-sm  check' >查看</button>"
-	return str;
+   	var html = "";
+	html +="<div class='task' >"
+	html +="  <div class='task_title' ><span>"+row._serverData.name+"</span></div>";
+	html +="  <div class='task_num'><span>浏览次数:</span><span>"+row._serverData.number+"</span></div>"
+	html +="  <div class='task_time'><span>发布时间:</span><span>"+formatDTime2(row._serverData.createdDate)+"</span></div>";
+	
+	html +="</div>"
+	
+	return html;
 }
 /**
  * 操作点击事件
  */
 window.operateEvents = {
-		'click .check' : function(e, value, row, index) {
+		'click .task' : function(e, value, row, index) {
 			
-			var str = 'update article set number='+(row._serverData.number+1)+' where objectId="'+row.id+'"';
-			AV.Query.doCloudQuery(str).then(function (data) {
-			  console.log(JSON.stringify(data));
-			}, function (error) {
-			  console.error(error);
-			});
+			localStorage.setItem("name", row._serverData.name);
+			localStorage.setItem("id", row.id);
 			
-			var Record = AV.Object.extend('record');
-			var record = new Record();
-				record.save(
-					{
-						articleId: row.id,
-						name:row._serverData.name,
-						createDate:new Date().getTime()
-					}
-				).then(function(object) {
-					console.log(object);
-			})
 			
 			$("#childPage").show(); 
 			if(row._serverData.type==1){
@@ -109,7 +125,6 @@ window.operateEvents = {
 			}else if(row._serverData.type==2){
 				$("#childPage").attr("src","wz/"+row._serverData.name+".html") 
 			}
-//			$("#childPage").attr("src","rj/2019-05-05.html") 
 		}
 };
 
@@ -119,57 +134,26 @@ function showTable() {
 	$('#table').bootstrapTable('destroy').bootstrapTable({
 //		url : subURL('equipmentCapacity/search.action'), //请求后台的URL（*）  
 		dataType:'jsonp',
-		striped : false, // 是否显示行间隔色
+//		striped : false, // 是否显示行间隔色
 		pagination : true, // 是否显示分页（*）
-		sortable : false, // 是否启用排序
-		sortOrder : "asc", // 排序方式
+//		sortable : false, // 是否启用排序
+//		sortOrder : "asc", // 排序方式
         toolbar:"#toolbar",
 		pageNumber : 1, // 初始化加载第一页，默认第一页
 		pageSize : 10, // 每页的记录行数（*）
-		pageList : [ 10, 25, 50, 100 ], // 可供选择的每页的行数（*）
+//		pageList : [ 10, 25, 50, 100 ], // 可供选择的每页的行数（*）
 		strictSearch : true,
 		clickToSelect : true, // 是否启用点击选中行
-		height : 512, // 行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+//		height : 512, // 行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
 		columns : [ 
        {
-	       	field : 'name',
-	       	title : '名称',
+	       	field : '',
+	       	title : '',
 	       	align:"center",
 	       	valign:'middle',
-	       	formatter:function(val,row){
-	       		return row._serverData.name;
-	       	}
-       	},
-       {
-	       	field : 'number',
-	       	title : '浏览次数',
-	       	align:"center",
-	       	valign:'middle',
-	       	formatter:function(val,row){
-	       		return row._serverData.number;
-	       	}
-       },
-       {
-	       	field : 'createdDate',
-	       	title : '创建时间',
-	       	align:"center",
-	       	valign:'middle',
-	       	formatter:function(val,row){
-	       		var time = row._serverData.createdDate;
-	       		if(time==null || time=="" || time==undefined){
-	       			return ""
-	       		}else{
-	       			return formatDTime2(row._serverData.createdDate);
-	       		}
-	       	}
-       },
-       	{
-       		field : 'op',
-       		title : '操作',
-       		align:"center",
-       		formatter : operate,
-       		events : operateEvents
-       	}
+	       	formatter:operate,
+	       	events : operateEvents
+       }
 		],
 		onLoadSuccess : function(data) {
 
@@ -179,7 +163,7 @@ function showTable() {
 };
 
 
-AV.Query.doCloudQuery('select * from article where type = 2 order by createdDate desc').then(function (data) {
+AV.Query.doCloudQuery('select * from article where type = 1 order by createdDate desc').then(function (data) {
     console.log(data);
     $('#table').bootstrapTable('load',data.results);
 }, function (error) {
@@ -188,6 +172,13 @@ AV.Query.doCloudQuery('select * from article where type = 2 order by createdDate
 
 
 function toRj(){
+	$(".head_menu").removeClass('active');
+	$(param).addClass('active');
+	
+	$("#article1").show();
+	$("#article2,#childPage").hide();
+	$("#childPage").attr("src",""); 
+	
 	flag_type = 1;
 	AV.Query.doCloudQuery('select * from article where type = 1 order by createdDate desc').then(function (data) {
 	    console.log(data);
@@ -197,15 +188,25 @@ function toRj(){
 	});  
 }
 
-function toWz(){
-	flag_type = 2;
-	AV.Query.doCloudQuery('select * from article where type = 2 order by createdDate desc').then(function (data) {
+function toWz(param,flag){
+	$(".head_menu").removeClass('active');
+	$(param).addClass('active');
+	
+	$("#article1").show();
+	$("#article2,#childPage").hide();
+	$("#childPage").attr("src",""); 
+	
+	flag_type = flag;
+	AV.Query.doCloudQuery('select * from article where type = '+flag+' order by createdDate desc').then(function (data) {
 	    console.log(data);
 	    $('#table').bootstrapTable('load',data.results);
 	}, function (error) {
 	    console.log(JSON.stringify(error));
 	});  
 }
+
+
+
 
 function refresh(){
 	AV.Query.doCloudQuery('select * from article where type = '+flag_type+' order by createdDate desc').then(function (data) {
@@ -216,6 +217,82 @@ function refresh(){
 	}); 
 }
 
+
+
+
+function toAbout(){
+	$("#myModal").modal('show');
+}
+
+
+
+
+/**********************留言板************************/
+
+function toDiss(){
+	$("#article1,#childPage").hide();
+	$("#childPage").attr("src",""); 
+	$("#article2").show();
+	showDiss();
+}
+
+
+function showDiss(){
+	AV.Query.doCloudQuery('select * from messageboard order by createDate desc').then(function (data) {
+	    console.log(data);
+	    var html = "";
+	    for(var i=0;i<data.results.length;i++){
+	    	html += '<div>';
+	    	html += ' <p>'+data.results[i]._serverData.content+'</p>';
+	    	html += ' <p>'+formatDTime2(data.results[i]._serverData.createDate)+'</p>';
+	    	html += '</div>';
+	    }
+	    $(".dissTaskContent").html(html);
+	}, function (error) {
+	    console.log(JSON.stringify(error));
+	}); 
+}
+
+function addDiss(){
+	if($("#dissIn").val()==""){
+//		alert("请输入内容");
+		return false;
+	}
+	var messageboard = AV.Object.extend('messageboard');
+	var messageboard = new messageboard();
+		messageboard.save({
+			
+			content: $("#dissIn").val(),
+			createDate:new Date().getTime()
+		
+		}).then(function(object) {
+			$("#dissIn").val('');
+			showDiss();
+	})
+}
+
+
+
+/********************访问********************/
+
+
+//var access = AV.Object.extend('access');
+//var access = new access();
+//	access.save({
+//		
+//		createDate:new Date().getTime()
+//	
+//	}).then(function(object) {
+//		
+//		console.log('欢迎访问')
+//
+//})
+
+
+
+/*********************************/
+
+$("#myModal2").modal('show');
 
 function formatDTime2(time) {
 	var Rime = "";
@@ -231,3 +308,4 @@ function formatDTime2(time) {
 	}
 	return Rime;
 }
+

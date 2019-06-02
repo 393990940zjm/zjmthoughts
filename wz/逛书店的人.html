@@ -34,11 +34,35 @@
             		<p>工作人员看着，收银人看着，看着我们这些逛书店的人啼笑皆非的人生，成为了他们茶余饭后的谈资。可他们，在管账的人眼里又何尝不是逛书店的人，又何尝不会成为他们茶余饭后的谈资。而那个和刻板脸吵架的工作人员，又招惹了谁，平白无故被一顿痛骂，不知会被领导如何责罚。说到底，谁在看我们的人生，我们又在看谁的人生，谁在过我们的人生，我们的人生又被多少人反复着。</p>
             		<p>这是无数人的故事，又被无数人改编了故事，我们是一群逛书店的人，看着书里无数类似的我们，过相似的日子。</p>
 					<p style="text-align: right;" > 作者：张俊明</p>
+					
+					
+					<h3 style="border-bottom: 1px solid #000000;" >评论<button class="btn btn-default" onclick="alertDiss()" style="margin-left: 10px;margin-top: -5px;" >发布</button></h3>
+					<div class="dissTaskContent" >
+					</div>
 		        </div>
  		</div>
 	</div>
-
+	<!-- 模态框（Modal） -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	                <h4 class="modal-title" id="myModalLabel">评论</h4>
+	            </div>
+	            <div class="modal-body">
+	            	<textarea id="dissIn" ></textarea>
+	            </div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+	                <button type="button" class="btn btn-primary" onclick="addDiss()" >提交更改</button>
+	            </div>
+	        </div><!-- /.modal-content -->
+	    </div><!-- /.modal -->
+	</div>
 	</body>
+	<script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.12.0/dist/av-min.js"></script>
 	<script type="text/javascript" src="../js/jquery-1.11.2.min.js" ></script>
+	<script type="text/javascript" src="../js/bootstrap.min.js" ></script>
 	<script type="text/javascript" src="../js/childPage.js" ></script>
 </html>

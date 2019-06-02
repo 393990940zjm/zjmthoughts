@@ -10,4 +10,157 @@ body,html{
 	left: 0;
 	display: none;
 	background: #fff;
+	margin-top: 50px;
+}
+.head{
+	position:fixed; 
+    top:0; 
+    left:0; 
+    z-index:99; 
+	height: 50px;
+	width: 100%;
+	background: #000000;
+}
+.container{
+	margin-top: 50px;
+}
+/*.head span{
+	line-height: 50px;
+	font-size: 20px;
+	color: #FFFFFF;
+	margin-left: 5px;
+}*/
+.head_logo{
+    float: left;
+    height: 50px;
+    width: 100px;
+    text-align: center;
+    line-height: 50px;
+    font-size: 20px;
+    color: #ffffff;
+    letter-spacing: 3px;
+}
+.head_menu{
+    float: left;
+    height: 40px;
+    width: 50px;
+    text-align: center;
+    line-height: 40px;
+    font-size: 18px;
+    background: #999;
+    margin: 5px;
+    border-radius: 15px 0 15px 0;
+    color: #fff;
+}
+.active{
+	background: #38c559;
+}
+.head_liuyan{
+	float: right;
+    height: 40px;
+    width: 40px;
+    text-align: center;
+    line-height: 40px;
+    font-size: 18px;
+    margin: 5px;
+    background-image: url(diss.png);
+    background-repeat: no-repeat;
+    background-size: 70% 70%;
+    background-position-y: 3px ;
+    background-position-x: 5px ;
+}
+.head_about{
+	float: right;
+    height: 40px;
+    width: 40px;
+    text-align: center;
+    line-height: 40px;
+    font-size: 18px;
+    margin: 5px;
+    background-image: url(about.png);
+    background-repeat: no-repeat;
+    background-size: 70% 60%;
+    background-position-y: 6px ;
+    background-position-x: 5px ;
+}
+th{
+	display: none;
+}
+.bootstrap-table .table:not(.table-condensed), .bootstrap-table .table:not(.table-condensed) > tbody > tr > th, .bootstrap-table .table:not(.table-condensed) > tfoot > tr > th, .bootstrap-table .table:not(.table-condensed) > thead > tr > td, .bootstrap-table .table:not(.table-condensed) > tbody > tr > td, .bootstrap-table .table:not(.table-condensed) > tfoot > tr > td {
+    padding: 0px;
+}
+.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td {
+    border-top: 0px solid #ddd;
+}
+.fixed-table-container {
+    border: 0px solid #dddddd;
+}
+.bootstrap-table .table {
+    border-bottom: 0px solid #dddddd; 
+}
+.task{
+	text-align: left;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    width: 95%;
+    box-shadow: darkgrey 5px 5px 10px 2px ;
+}
+.task_title{
+	font-size: 20px;
+}
+
+.dissTaskIn{
+	position:fixed; 
+    top:50px; 
+    left:0; 
+    z-index:99; 
+    width: 100%;
+    height: 230px;
+    background: #000000;
+    border-top: 1px solid #999;
+}
+.dissTaskIn p{
+	text-align: center;
+	font-size: 24px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	color: #999;
+}
+.dissTaskInContent{
+	text-align: center;
+}
+.dissTaskInContent textarea{
+	margin: 0 auto;
+	width: 90%;
+	height: 120px;
+	resize: none;
+	text-align: left;
+	border: 2px solid #ddd;
+	border-radius: 15px;
+	outline: none;
+}
+.dissTaskInFloor{
+	text-align: center;
+	margin-top: 10px;
+}
+.dissTaskInFloor button{
+	margin: 0 auto;
+	width: 90%;
+	height: 40px;
+}
+.dissTaskContent{
+	width: 100%;
+	margin-top: 250px;
+}
+.dissTaskContent div{
+    background: #d1edf3;
+    margin-bottom: 15px;
+    padding: 5px;
+    border-radius: 5px;
+}
+.dissTaskContent p{
+	word-break:break-all;
+	width: 100%;
+	margin-bottom: 5px;
 }
