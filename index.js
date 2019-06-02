@@ -1,26 +1,26 @@
-window.onload = function(){
-     //屏蔽键盘事件
-     document.onkeydown = function (){
-         var e = window.event || arguments[0];
-        //F12
-         if(e.keyCode == 123){
-             return false;
-         //Ctrl+Shift+I
-         }else if((e.ctrlKey) && (e.shiftKey) && (e.keyCode == 73)){
-             return false;
-         //Shift+F10
-         }else if((e.shiftKey) && (e.keyCode == 121)){
-             return false;
-         //Ctrl+U
-         }else if((e.ctrlKey) && (e.keyCode == 85)){
-             return false;
-         }
-     };
-     //屏蔽鼠标右键
-     document.oncontextmenu = function (){
-         return false;
-     }
-   }
+//window.onload = function(){
+//   //屏蔽键盘事件
+//   document.onkeydown = function (){
+//       var e = window.event || arguments[0];
+//      //F12
+//       if(e.keyCode == 123){
+//           return false;
+//       //Ctrl+Shift+I
+//       }else if((e.ctrlKey) && (e.shiftKey) && (e.keyCode == 73)){
+//           return false;
+//       //Shift+F10
+//       }else if((e.shiftKey) && (e.keyCode == 121)){
+//           return false;
+//       //Ctrl+U
+//       }else if((e.ctrlKey) && (e.keyCode == 85)){
+//           return false;
+//       }
+//   };
+//   //屏蔽鼠标右键
+//   document.oncontextmenu = function (){
+//       return false;
+//   }
+// }
 
 
 var APP_ID = '{{appid}}';
@@ -276,23 +276,28 @@ function addDiss(){
 /********************访问********************/
 
 
-var access = AV.Object.extend('access');
-var access = new access();
-	access.save({
-		
-		createDate:new Date().getTime()
-	
-	}).then(function(object) {
-		
-		console.log('欢迎访问')
-
-})
+//var access = AV.Object.extend('access');
+//var access = new access();
+//	access.save({
+//		
+//		createDate:new Date().getTime()
+//	
+//	}).then(function(object) {
+//		
+//		console.log('欢迎访问')
+//
+//})
 
 
 
 /*********************************/
+var frist = 2
+if(localStorage.frist != frist){
+	$("#myModal2").modal('show');
+	localStorage.setItem("frist", frist );
+}
 
-$("#myModal2").modal('show');
+
 
 function formatDTime2(time) {
 	var Rime = "";
@@ -309,3 +314,28 @@ function formatDTime2(time) {
 	return Rime;
 }
 
+
+var overscroll = function(el) {
+    el.addEventListener('touchstart', function() {
+        var top = el.scrollTop
+        ,totalScroll = el.scrollHeight
+        ,currentScroll = top + el.offsetHeight;
+        if(top === 0) {
+            el.scrollTop = 1;
+        }else if(currentScroll === totalScroll) {
+            el.scrollTop = top - 1;
+        }
+    });
+   
+    el.addEventListener('touchmove', function(evt) {
+    if(el.offsetHeight < el.scrollHeight)
+        evt._isScroller = true;
+    });
+}
+        
+overscroll(document.querySelector('.scroll'));
+document.body.addEventListener('touchmove', function(evt) {
+    if(!evt._isScroller) {
+        evt.preventDefault();
+    }
+})

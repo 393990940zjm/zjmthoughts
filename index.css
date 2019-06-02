@@ -148,6 +148,7 @@ th{
 	margin: 0 auto;
 	width: 90%;
 	height: 40px;
+	outline: none;
 }
 .dissTaskContent{
 	width: 100%;
@@ -164,3 +165,5 @@ th{
 	width: 100%;
 	margin-bottom: 5px;
 }
+.btn:focus, .btn:active:focus, .btn.active:focus {
+    outline: none;
