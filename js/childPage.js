@@ -1,26 +1,26 @@
-//window.onload = function(){
-//   //屏蔽键盘事件
-//   document.onkeydown = function (){
-//       var e = window.event || arguments[0];
-//      //F12
-//       if(e.keyCode == 123){
-//           return false;
-//       //Ctrl+Shift+I
-//       }else if((e.ctrlKey) && (e.shiftKey) && (e.keyCode == 73)){
-//           return false;
-//       //Shift+F10
-//       }else if((e.shiftKey) && (e.keyCode == 121)){
-//           return false;
-//       //Ctrl+U
-//       }else if((e.ctrlKey) && (e.keyCode == 85)){
-//           return false;
-//       }
-//   };
-//   //屏蔽鼠标右键
-//   document.oncontextmenu = function (){
-//       return false;
-//   }
-// }
+window.onload = function(){
+     //屏蔽键盘事件
+     document.onkeydown = function (){
+         var e = window.event || arguments[0];
+        //F12
+         if(e.keyCode == 123){
+             return false;
+         //Ctrl+Shift+I
+         }else if((e.ctrlKey) && (e.shiftKey) && (e.keyCode == 73)){
+             return false;
+         //Shift+F10
+         }else if((e.shiftKey) && (e.keyCode == 121)){
+             return false;
+         //Ctrl+U
+         }else if((e.ctrlKey) && (e.keyCode == 85)){
+             return false;
+         }
+     };
+     //屏蔽鼠标右键
+     document.oncontextmenu = function (){
+         return false;
+     }
+   }
 
 
 
@@ -55,27 +55,27 @@ query.get(localStorage.id).then(function (todo) {
     console.log(error);
 });
 
-//function addRecord(param){
-//	console.log(param);
-//	 var str = 'update article set number='+(param._serverData.number+1)+' where objectId="'+localStorage.id+'"';
-//	AV.Query.doCloudQuery(str).then(function (data) {
-//	  console.log(JSON.stringify(data));
-//	}, function (error) {
-//	  console.error(error);
-//	});
-//	
-//	var Record = AV.Object.extend('record');
-//	var record = new Record();
-//		record.save(
-//			{
-//				articleId: localStorage.id,
-//				name:localStorage.name,
-//				createDate:new Date().getTime()
-//			}
-//		).then(function(object) {
-//			console.log(object);
-//	})
-//}
+function addRecord(param){
+	console.log(param);
+	 var str = 'update article set number='+(param._serverData.number+1)+' where objectId="'+localStorage.id+'"';
+	AV.Query.doCloudQuery(str).then(function (data) {
+	  console.log(JSON.stringify(data));
+	}, function (error) {
+	  console.error(error);
+	});
+	
+	var Record = AV.Object.extend('record');
+	var record = new Record();
+		record.save(
+			{
+				articleId: localStorage.id,
+				name:localStorage.name,
+				createDate:new Date().getTime()
+			}
+		).then(function(object) {
+			console.log(object);
+	})
+}
 
 
 /*****************************评论*************************/
