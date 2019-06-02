@@ -114,7 +114,7 @@ function operate(value, row, index) {
  */
 window.operateEvents = {
 		'click .task' : function(e, value, row, index) {
-			
+			$("#childPage").attr("src","");
 			localStorage.setItem("name", row._serverData.name);
 			localStorage.setItem("id", row.id);
 			
