@@ -1,19 +1,3 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8">
-		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-		<meta http-equiv="Pragma" content="no-cache" />
-		<meta http-equiv="Expires" content="0" />				
-		<title></title>
-		<link rel="stylesheet" href="../css/bootstrap.min.css" />
-		<link rel="stylesheet" href="../css/childPage.css" />
-	</head>
-	<body>
-		<button class="btn btn-default" onclick="back()" >返回</button>
-		<div class="container">
-		    <div class="row" >
-		        <div class="col-xs-12 col-sm-12" >
             		<h1>不知不觉</h1>
             		<h2>(一)</h2>
             		<p>听着周杰伦，听着邓紫棋，不知不觉，灵魂深处，又有一股莫名的暗潮涌动。旋律，词曲，每每动人的高潮迭起，让我不知不觉，情不自禁，不知不觉，浅歌慢吟。</p>
@@ -38,36 +22,3 @@
 					<p>时间是残酷的，它让我们如此珍贵的时间消散在不知不觉里。回味，也必须再跳入这不知不觉的深渊里，折磨，后悔。</p>
 					<p>于是我终于明白，当历史被挂在城墙上嘲笑，当时间带着尴尬继续奔跑，只有不知不觉还留在那里任由你回味的时候，你应该明白，那两个把你卖了的家伙，你为什么还要傻傻地替它们数钱呢。</p>
 					<p style="text-align: right;" > 作者：张俊明</p>
-					
-					
-					<h3 style="border-bottom: 1px solid #000000;" >评论<button class="btn btn-default" onclick="alertDiss()" style="margin-left: 10px;margin-top: -5px;" >填写</button></h3>
-					<div class="dissTaskContent" >
-					</div>
-		        </div>
- 		</div>
-	</div>
-	<!-- 模态框（Modal） -->
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	    <div class="modal-dialog">
-	        <div class="modal-content">
-	            <div class="modal-header">
-	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	                <h4 class="modal-title" id="myModalLabel">评论</h4>
-	            </div>
-	            <div class="modal-body">
-	            	<textarea id="dissIn" ></textarea>
-	            </div>
-	            <div class="modal-footer">
-	                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-	                <button type="button" class="btn btn-primary" onclick="addDiss()" >发布</button>
-	            </div>
-	        </div><!-- /.modal-content -->
-	    </div><!-- /.modal -->
-	</div>
-	</body>
-	<script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.12.0/dist/av-min.js"></script>
-	<script type="text/javascript" src="../js/jquery-1.11.2.min.js" ></script>
-	<script src="http://pv.sohu.com/cityjson?ie=utf-8" ></script>
-	<script type="text/javascript" src="../js/bootstrap.min.js" ></script>
-	<script type="text/javascript" src="../js/childPage.js" ></script>
-</html>

@@ -1,19 +1,3 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8">
-		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-		<meta http-equiv="Pragma" content="no-cache" />
-		<meta http-equiv="Expires" content="0" />				
-		<title></title>
-		<link rel="stylesheet" href="../css/bootstrap.min.css" />
-		<link rel="stylesheet" href="../css/childPage.css" />
-	</head>
-	<body>
-		<button class="btn btn-default" onclick="back()" >返回</button>
-		<div class="container">
-		    <div class="row" >
-		        <div class="col-xs-12 col-sm-12" >
             		<h1>逛书店的人</h1>
             		<p>每一个休息日的下午，都是磨人的下午。</p>
             		<p>晚睡晚起颠倒反复，这一顿中饭下肚，好不容易赶走的瞌睡虫又跟开party是的聚到一块，怎么都赶不走。这可怎么办呢，再睡一觉？这一闭眼过去那一天可就真没了，还有老多的事要做，心头也老绕着说不清道不明的事，不能啥都不干就睡一天糊弄过去了，那不得更糟心。我心想着不行，无论如何还是得找点事情做。</p>
@@ -37,36 +21,3 @@
             		<p>工作人员看着，收银人看着，看着我们这些逛书店的人啼笑皆非的人生，成为了他们茶余饭后的谈资。可他们，在管账的人眼里又何尝不是逛书店的人，又何尝不会成为他们茶余饭后的谈资。而那个和刻板脸吵架的工作人员，又招惹了谁，平白无故被一顿痛骂，不知会被领导如何责罚。说到底，谁在看我们的人生，我们又在看谁的人生，谁在过我们的人生，我们的人生又被多少人反复着。</p>
             		<p>这是无数人的故事，又被无数人改编了故事，我们是一群逛书店的人，看着书里无数类似的我们，过相似的日子。</p>
 					<p style="text-align: right;" > 作者：张俊明</p>
-					
-					
-					<h3 style="border-bottom: 1px solid #000000;" >评论<button class="btn btn-default" onclick="alertDiss()" style="margin-left: 10px;margin-top: -5px;" >填写</button></h3>
-					<div class="dissTaskContent" >
-					</div>
-		        </div>
- 		</div>
-	</div>
-	<!-- 模态框（Modal） -->
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	    <div class="modal-dialog">
-	        <div class="modal-content">
-	            <div class="modal-header">
-	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	                <h4 class="modal-title" id="myModalLabel">评论</h4>
-	            </div>
-	            <div class="modal-body">
-	            	<textarea id="dissIn" ></textarea>
-	            </div>
-	            <div class="modal-footer">
-	                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-	                <button type="button" class="btn btn-primary" onclick="addDiss()" >发布</button>
-	            </div>
-	        </div><!-- /.modal-content -->
-	    </div><!-- /.modal -->
-	</div>
-	</body>
-	<script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.12.0/dist/av-min.js"></script>
-	<script type="text/javascript" src="../js/jquery-1.11.2.min.js" ></script>
-	<script src="http://pv.sohu.com/cityjson?ie=utf-8" ></script>
-	<script type="text/javascript" src="../js/bootstrap.min.js" ></script>
-	<script type="text/javascript" src="../js/childPage.js" ></script>
-</html>

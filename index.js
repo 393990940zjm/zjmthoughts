@@ -120,11 +120,8 @@ window.operateEvents = {
 			
 			
 			$("#childPage").show(); 
-			if(row._serverData.type==1){
-				$("#childPage").attr("src","rj/"+row._serverData.name+".html") 
-			}else if(row._serverData.type==2){
-				$("#childPage").attr("src","wz/"+row._serverData.name+".html") 
-			}
+			$("#childPage").attr("src","wz/write.html")
+			
 		}
 };
 

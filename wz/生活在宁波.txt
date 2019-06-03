@@ -1,19 +1,3 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8">
-		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-		<meta http-equiv="Pragma" content="no-cache" />
-		<meta http-equiv="Expires" content="0" />				
-		<title></title>
-		<link rel="stylesheet" href="../css/bootstrap.min.css" />
-		<link rel="stylesheet" href="../css/childPage.css" />
-	</head>
-	<body>
-		<button class="btn btn-default" onclick="back()" >返回</button>
-		<div class="container">
-		    <div class="row" >
-		        <div class="col-xs-12 col-sm-12" >
             		<h1>生活在宁波</h1>
 					<p>留在一座城市的理由有很多，因为根在这里，因为事业在这里，因为爱情在这里，或不知该去往哪里。站点将几座城市连线，我们看着划过天空的飞机和高速路上飞驰的车流，他们带着不同的人走进不同的目的地，到站的人又在各自的生活里遇见注定的异乡人。他们在高峰期里挤上同一辆公交，眼神彼此不交流，摇晃的身体似时间钟摆，载着一路的陌生人各奔远方。</p>
 					<p>而我在一座叫做宁波的城市里度过了二十多年，我生在这里，长在这里，我青春在这里，我的记忆在这里，可我，却未觉得真正的活过。</p>
@@ -26,36 +10,3 @@
 					<p>对于一车厢的人来说，地铁再便捷也送不去他们要去的地方，电视里祛斑祛痘的广告听到恶心，而司机每一次重重地油门和刹车都在宣泄着内心的不公。在此刻，这座城市的好或者不好都和他们没有关系，他们现在关心的只是要面对领导和一堆头疼的工作，他们谈论的都是这个世界发生着哪些不好的事，他们烦躁的是中午和晚上要吃什么，他们痛苦的是有可能挤不上或者又要站一路的公交，以及回家又要面对家人的脸色。</p>
 					<p>我们不关心一座城市是否具有幸福感，也不关心是否又多了几个可以逛街的地方，虽然这座城市很安全，但却像一座敞开的牢笼。我们可以选择周末不留在家里，我们可以选择吃遍城市的每一个角落，我们可以选择多去大剧院或者图书馆，但我们选择了留在家里，只是因为在苦闷的生活里找到一点自己的空间和时间，或者免受人潮的伤害。在快节奏的城市生活里，我们不得已将自己卖给金钱。我们内心苦痛可又不得不妥协，我们充满渴望又步步隐忍。我们在城市的高台里看着这座城市慢慢变化，拆除的重建，旧的翻新，似乎一切都在变好，也似乎一切都没改变。</p>
 					<p style="text-align: right;" > 作者：张俊明</p>
-					
-					
-					<h3 style="border-bottom: 1px solid #000000;" >评论<button class="btn btn-default" onclick="alertDiss()" style="margin-left: 10px;margin-top: -5px;" >填写</button></h3>
-					<div class="dissTaskContent" >
-					</div>
-		        </div>
- 		</div>
-	</div>
-	<!-- 模态框（Modal） -->
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	    <div class="modal-dialog">
-	        <div class="modal-content">
-	            <div class="modal-header">
-	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	                <h4 class="modal-title" id="myModalLabel">评论</h4>
-	            </div>
-	            <div class="modal-body">
-	            	<textarea id="dissIn" ></textarea>
-	            </div>
-	            <div class="modal-footer">
-	                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-	                <button type="button" class="btn btn-primary" onclick="addDiss()" >发布</button>
-	            </div>
-	        </div><!-- /.modal-content -->
-	    </div><!-- /.modal -->
-	</div>
-	</body>
-	<script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.12.0/dist/av-min.js"></script>
-	<script type="text/javascript" src="../js/jquery-1.11.2.min.js" ></script>
-	<script src="http://pv.sohu.com/cityjson?ie=utf-8" ></script>
-	<script type="text/javascript" src="../js/bootstrap.min.js" ></script>
-	<script type="text/javascript" src="../js/childPage.js" ></script>
-</html>
