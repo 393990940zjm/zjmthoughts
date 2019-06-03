@@ -263,7 +263,9 @@ function addDiss(){
 		messageboard.save({
 			
 			content: $("#dissIn").val(),
-			createDate:new Date().getTime()
+			createDate:new Date().getTime(),
+			ip:returnCitySN["cip"],
+			cname:returnCitySN['cname']
 		
 		}).then(function(object) {
 			$("#dissIn").val('');

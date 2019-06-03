@@ -115,7 +115,9 @@ function addDiss(){
 			content: $("#dissIn").val(),
 			createDate:new Date().getTime(),
 			uid:localStorage.id,
-			name:localStorage.name
+			name:localStorage.name,
+			ip:returnCitySN["cip"],
+			cname:returnCitySN['cname']
 		
 		}).then(function(object) {
 			
