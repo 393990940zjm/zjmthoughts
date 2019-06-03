@@ -70,7 +70,9 @@ function addRecord(param){
 			{
 				articleId: localStorage.id,
 				name:localStorage.name,
-				createDate:new Date().getTime()
+				createDate:new Date().getTime(),
+				ip:returnCitySN["cip"],
+				cname:returnCitySN['cname']
 			}
 		).then(function(object) {
 			console.log(object);
