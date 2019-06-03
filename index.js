@@ -280,7 +280,9 @@ var access = AV.Object.extend('access');
 var access = new access();
 	access.save({
 		
-		createDate:new Date().getTime()
+		createDate:new Date().getTime(),
+		ip:returnCitySN["cip"],
+		cname:returnCitySN['cname']
 	
 	}).then(function(object) {
 		
