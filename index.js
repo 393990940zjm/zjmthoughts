@@ -31,7 +31,7 @@ AV.init({
   appKey: 'yLASWKfAAaOnLc9toHMTq4K6'
 });
 
-var flag_type = 1;
+var flag_type = 2;
 
 //var TestObject = AV.Object.extend('TestObject');
 //var testObject = new TestObject();
@@ -135,13 +135,13 @@ function showTable() {
 		pagination : true, // 是否显示分页（*）
 //		sortable : false, // 是否启用排序
 //		sortOrder : "asc", // 排序方式
-        toolbar:"#toolbar",
+//      toolbar:"#toolbar",
 		pageNumber : 1, // 初始化加载第一页，默认第一页
 		pageSize : 10, // 每页的记录行数（*）
 //		pageList : [ 10, 25, 50, 100 ], // 可供选择的每页的行数（*）
 		strictSearch : true,
 		clickToSelect : true, // 是否启用点击选中行
-//		height : 512, // 行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+		height : $(window).height()-50, // 行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
 		columns : [ 
        {
 	       	field : '',
@@ -160,7 +160,7 @@ function showTable() {
 };
 
 
-AV.Query.doCloudQuery('select * from article where type = 1 order by createdDate desc').then(function (data) {
+AV.Query.doCloudQuery('select * from article where type = 2 order by createdDate desc').then(function (data) {
     console.log(data);
     $('#table').bootstrapTable('load',data.results);
 }, function (error) {

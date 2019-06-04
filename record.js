@@ -136,14 +136,19 @@ function showTable() {
 };
 
 
-AV.Query.doCloudQuery('select * from record order by createDate desc limit 1000').then(function (data) {
+AV.Query.doCloudQuery('select * from record order by createDate desc limit 0,10000').then(function (data) {
     console.log(data);
     $('#table').bootstrapTable('load',data.results);
 }, function (error) {
     console.log(JSON.stringify(error)); 
 });  
 
-
+AV.Query.doCloudQuery('select count(*) from record order by createDate desc limit 0,10000').then(function (data) {
+    console.log(data);
+//  $('#table').bootstrapTable('load',data.results);
+}, function (error) {
+    console.log(JSON.stringify(error)); 
+});  
 
 
 

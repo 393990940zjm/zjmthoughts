@@ -14,21 +14,22 @@
 <body id="scroll" >
 	<div class="head" >
 		<div class="head_logo" >思绪隽永</div>
-		<div class="head_menu active" onclick="toWz(this,1)" >随想</div>		
-		<div class="head_menu" onclick="toWz(this,2)" >杂文</div>		
+			
+		<div class="head_menu active" onclick="toWz(this,2)" >杂文</div>	
+		<div class="head_menu " onclick="toWz(this,1)" >随想</div>	
 		<div class="head_liuyan" onclick="toDiss()" ></div>		
 		<div class="head_about" onclick="toAbout()" ></div>		
 	</div>
 	<div class="container" id="article1" >
 		<div class="row" >
-		    <div class="col-xs-12 col-sm-12" >
+		    <div class="col-xs-12 col-sm-12" style="height: calc( 100vh - 50px );overflow: auto;" >
 				<table id="table" class="table table-hover" ></table>
 		    </div>
 		</div>
 	</div>
 	<div class="container" id="article2" style="display: none;" >
 		<div class="row" >
-		    <div class="col-xs-12 col-sm-12" >
+		    <div class="col-xs-12 col-sm-12"  >
 				<div class="dissTaskIn" >
 					<p class="title" >留言板</p>
 					<div class="dissTaskInContent" >
@@ -43,7 +44,13 @@
 		    </div>
 		</div>
 	</div>
-	<iframe id="childPage" src="" ></iframe>
+	<iframe frameborder='no' border='0' id="childPage" src="" ></iframe>
+	
+	<!--<div class="footer" >
+	
+	</div>-->
+	
+	
 	<!-- 模态框（Modal） -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	    <div class="modal-dialog" style="width: 200px;margin: 10px auto;" >
