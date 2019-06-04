@@ -95,6 +95,24 @@ function showTable() {
 	       		return row._serverData.name;
 	       	}
        },
+        {
+	       	field : 'ip',
+	       	title : 'ip',
+	       	align:"center",
+	       	valign:'middle',
+	       	formatter:function(val,row){
+	       		return row._serverData.ip;
+	       	}
+       },
+        {
+	       	field : 'cname',
+	       	title : '地点',
+	       	align:"center",
+	       	valign:'middle',
+	       	formatter:function(val,row){
+	       		return row._serverData.cname;
+	       	}
+       },
        {
 	       	field : 'createDate',
 	       	title : '浏览时间',
@@ -118,7 +136,7 @@ function showTable() {
 };
 
 
-AV.Query.doCloudQuery('select * from record order by createDate desc').then(function (data) {
+AV.Query.doCloudQuery('select * from record order by createDate desc limit 1000').then(function (data) {
     console.log(data);
     $('#table').bootstrapTable('load',data.results);
 }, function (error) {
