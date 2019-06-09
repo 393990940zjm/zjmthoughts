@@ -409,6 +409,7 @@ function headTab(param,num){
 			hotRead();
 			hotZz();
 			showStatistics();
+			showStatistics();
 			break;
 		case '02':
 			$(".homed").hide();
