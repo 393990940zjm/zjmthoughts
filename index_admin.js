@@ -135,7 +135,7 @@ window.operateEvents = {
 			$(".head,.footer").hide();
 			
 			$("#childPage").show(); 
-			$("#childPage").attr("src","wz/write.html")
+			$("#childPage").attr("src","wz/write_admin.html")
 			
 		}
 };
@@ -312,7 +312,7 @@ function toWz_d(param){
 	$(".head,.footer").hide();
 	
 	$("#childPage").show(); 
-	$("#childPage").attr("src","wz/write.html")
+	$("#childPage").attr("src","wz/write_admin.html")
 }
 
 /*********************热门原创杂志**********************/
@@ -341,7 +341,7 @@ function toWz_z(param){
 	$(".head,.footer").hide();
 	
 	$("#childPage").show(); 
-	$("#childPage").attr("src","wz/write.html")
+	$("#childPage").attr("src","wz/write_admin.html")
 }
 
 
