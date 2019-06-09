@@ -25,10 +25,10 @@ window.onload = function(){
 
 
 function back(){
-//	$("#article1" , parent.document).show();
 	window.parent.refresh();
-//	$("#childPage" , parent.document).attr('src',"");
 	$("#childPage" , parent.document).hide();
+	$(".head,.footer" , parent.document).show();
+	$(".head,.footer").show();
 }
 
 

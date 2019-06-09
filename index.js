@@ -100,12 +100,26 @@ var flag_type = 2;
 
 function operate(value, row, index) {
    	var html = "";
-	html +="<div class='task' >"
-	html +="  <div class='task_title' ><span>"+row._serverData.name+"</span></div>";
-	html +="  <div class='task_num'><span>浏览次数:</span><span>"+row._serverData.number+"</span></div>"
-	html +="  <div class='task_time'><span>发布时间:</span><span>"+formatDTime2(row._serverData.createdDate)+"</span></div>";
-	
-	html +="</div>"
+   	
+   	if(row._serverData.type==3){
+   		html +="<div class='task' style='height:90px;' >";
+   		html +="	<div class='task_left' >";
+   		html +="		<img src='"+row._serverData.img+"' />";
+   		html +="	</div>";
+   		html +="	<div class='task_right' >";
+		html +="       <div class='task_title' ><span>"+row._serverData.name+"</span></div>";
+		html +="       <div class='task_num'><span>浏览次数:</span><span>"+row._serverData.number+"</span></div>";
+		html +="       <div class='task_time'><span>发布时间:</span><span>"+formatDTime2(row._serverData.createdDate)+"</span></div>";   					
+   		html +="	</div>";
+		html +="</div>";
+   	}else{
+	   	html +="<div class='task' >"
+		html +="  <div class='task_title' ><span>"+row._serverData.name+"</span></div>";
+		html +="  <div class='task_num'><span>浏览次数:</span><span>"+row._serverData.number+"</span></div>";
+		html +="  <div class='task_time'><span>发布时间:</span><span>"+formatDTime2(row._serverData.createdDate)+"</span></div>";
+		html +="</div>";
+   	}
+
 	
 	return html;
 }
@@ -118,6 +132,7 @@ window.operateEvents = {
 			localStorage.setItem("name", row._serverData.name);
 			localStorage.setItem("id", row.id);
 			
+			$(".head,.footer").hide();
 			
 			$("#childPage").show(); 
 			$("#childPage").attr("src","wz/write.html")
@@ -141,7 +156,7 @@ function showTable() {
 //		pageList : [ 10, 25, 50, 100 ], // 可供选择的每页的行数（*）
 		strictSearch : true,
 		clickToSelect : true, // 是否启用点击选中行
-		height : $(window).height()-50, // 行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+		height : $(window).height()-100, // 行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
 		columns : [ 
        {
 	       	field : '',
@@ -185,13 +200,13 @@ function toRj(){
 	});  
 }
 
-function toWz(param,flag){
-	$(".head_menu").removeClass('active');
-	$(param).addClass('active');
-	
-	$("#article1").show();
-	$("#article2,#childPage").hide();
-	$("#childPage").attr("src",""); 
+function toWz(flag){
+//	$(".head_menu").removeClass('active');
+//	$(param).addClass('active');
+//	
+//	$("#article1").show();
+//	$("#article2,#childPage").hide();
+//	$("#childPage").attr("src",""); 
 	
 	flag_type = flag;
 	AV.Query.doCloudQuery('select * from article where type = '+flag+' order by createdDate desc').then(function (data) {
@@ -270,7 +285,100 @@ function addDiss(){
 	})
 }
 
+/*********************热门原创阅读**********************/
 
+function hotRead(){
+	AV.Query.doCloudQuery('select * from article where type = 2 order by number desc limit 0,5').then(function (data) {
+	    console.log(data);
+	    var html = "";
+	    for(var i=0;i<data.results.length;i++){
+	    	html += '<div class="home1_3d" data-id="'+data.results[i].id+'"  data-name="'+data.results[i]._serverData.name+'"  onclick="toWz_d(this)" >';
+			html += '	<span>'+(i+1)+'</span>';
+			html += '	<span>'+data.results[i]._serverData.name+'</span>';
+			html += '	<span>阅读量    : '+data.results[i]._serverData.number+'</span>';
+			html += '</div>';
+	    }
+	    $(".home1_3content").html(html)
+	}, function (error) {
+	    console.log(JSON.stringify(error));
+	});  
+}
+
+function toWz_d(param){
+	$("#childPage").attr("src","");
+	localStorage.setItem("name", $(param).data('name'));
+	localStorage.setItem("id", $(param).data('id'));
+	
+	$(".head,.footer").hide();
+	
+	$("#childPage").show(); 
+	$("#childPage").attr("src","wz/write.html")
+}
+
+/*********************热门原创杂志**********************/
+
+function hotZz(){
+	AV.Query.doCloudQuery('select * from article where type = 3 order by createDate desc limit 0,3').then(function (data) {
+	    console.log(data);
+	    var html = "";
+	    for(var i=0;i<data.results.length;i++){
+	    	html += '<div class="home1_2d" data-id="'+data.results[i].id+'"  data-name="'+data.results[i]._serverData.name+'"  onclick="toWz_d(this)" >';
+			html += '	<img src="'+data.results[i]._serverData.img+'" >';
+			html += '	<p>'+data.results[i]._serverData.name+'</p>';
+			html += '</div>';
+	    }
+	    $(".home1_2content").html(html)
+	}, function (error) {
+	    console.log(JSON.stringify(error));
+	});  
+}
+
+function toWz_z(param){
+	$("#childPage").attr("src","");
+	localStorage.setItem("name", $(param).data('name'));
+	localStorage.setItem("id", $(param).data('id'));
+	
+	$(".head,.footer").hide();
+	
+	$("#childPage").show(); 
+	$("#childPage").attr("src","wz/write.html")
+}
+
+
+/********************数据统计*********************/
+
+function showStatistics(){
+	var start = new Date(new Date(new Date().toLocaleDateString()).getTime()).getTime();
+	console.log(start);
+	
+	AV.Query.doCloudQuery("select count(*) from record where createDate >= "+start+" ").then(function (data) {
+		    console.log('当日阅读统计',data,data.count);
+		     $(".drYd").html(data.count);
+	}, function (error) {
+	    console.log(JSON.stringify(error));
+	});
+	
+	AV.Query.doCloudQuery("select count(*) from access where createDate >= "+start+" ").then(function (data) {
+		    console.log('当日访问统计',data,data.count);
+		    $(".drFw").html(data.count);
+	}, function (error) {
+	    console.log(JSON.stringify(error));
+	});  
+	
+	AV.Query.doCloudQuery("select count(*) from record").then(function (data) {
+		    console.log('历史阅读统计',data,data.count);
+		     $(".lsYd").html(data.count);
+	}, function (error) {
+	    console.log(JSON.stringify(error));
+	});
+	
+	AV.Query.doCloudQuery("select count(*) from access").then(function (data) {
+		    console.log('历史访问统计',data,data.count);
+		    $(".lsFw").html(data.count);
+	}, function (error) {
+	    console.log(JSON.stringify(error));
+	});  
+}
 
 /********************访问********************/
 
@@ -289,9 +397,89 @@ var access = new access();
 
 })
 
+/*****************切换tab*******************/
 
+function headTab(param,num){
+	$(".head0 .head0_d,.head1 .head1_d,.head2 .head2_d").removeClass('d_active');
+	$(param).addClass('d_active');
+	switch (num){
+		case '01':
+			$(".homed").hide();
+			$(".home1").show();
+			hotRead();
+			hotZz();
+			showStatistics();
+			break;
+		case '02':
+			$(".homed").hide();
+			$(".home2").show();
+			break;
+		case '03':
+			$(".homed").hide();
+			$(".home3").show();		
+			break;
+		case '11':
+			toWz(2)
+			break;
+		case '12':
+			toWz(1)
+			break;
+		case '13':
+			toWz(3)
+			break;
+		case '21':
+			$(".aboutd").hide();
+			$(".about1").show();			
+			break;
+		case '22':
+			$(".aboutd").hide();
+			$(".about2").show();			
+			break;	
+		case '23':
+			$(".aboutd").hide();
+			$(".about3").show();	
+			showDiss();
+			break;				
+	}
+}
+
+function tab(param,num){
+	$(".footer_d").removeClass('f_active');
+	$(param).addClass('f_active');
+	$(".container").hide();
+	$("#article"+num).show();
+	$(".head0,.head1,.head2").hide();
+	
+	switch (num){
+		case 0:
+			$(".head0").show();
+			$(".footer .footer_d:nth-child(2)").find('img').attr('src','homeImg/zp_black.png');
+			$(".footer .footer_d:nth-child(3)").find('img').attr('src','homeImg/about_black.png');
+			$(".footer .footer_d:nth-child(1)").find('img').attr('src','homeImg/home_blue.png');
+			$(".head0 div:nth-child(1)").click();
+			break;
+		case 1:
+			$(".head1").show();
+			$(".footer .footer_d:nth-child(2)").find('img').attr('src','homeImg/zp_blue.png');
+			$(".footer .footer_d:nth-child(3)").find('img').attr('src','homeImg/about_black.png');
+			$(".footer .footer_d:nth-child(1)").find('img').attr('src','homeImg/home_black.png');
+			$(".head1 div:nth-child(1)").click();
+			break;
+		case 2:
+			$(".head2").show();
+			$(".footer .footer_d:nth-child(2)").find('img').attr('src','homeImg/zp_black.png');
+			$(".footer .footer_d:nth-child(3)").find('img').attr('src','homeImg/about_blue.png');
+			$(".footer .footer_d:nth-child(1)").find('img').attr('src','homeImg/home_black.png');
+			$(".head2 div:nth-child(1)").click();
+			break;
+	}
+}
+
+$(".head0 div:nth-child(1)").click();
 
 /*********************************/
+$("#myCarousel").carousel('cycle');
+
 var frist = 2
 if(localStorage.frist != frist){
 	$("#myModal2").modal('show');

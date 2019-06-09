@@ -37,5 +37,36 @@ pre{
 	width: 100%;
 }
 .container{
-	margin-bottom: 80px;
+	/*margin-bottom: 80px;*/
+}
+.container p{
+	text-indent:25px;
+}
+.head{
+	position:fixed; 
+    top:0; 
+    left:0; 
+    z-index:99; 
+	height: 50px;
+	width: 100%;
+ 	background: #f4f4f4;
+}
+.head p{
+	font-size: 20px;
+    line-height: 50px;
+    padding-left: ;
+}
+.container{
+	margin-top: 50px;
+}
+.head p img{
+    height: 18px;
+    margin-top: -3px;
+}
+.container img{
+	margin-top: 5px;
+}
+h1{
+	text-align: center;
+	margin-bottom: 20px;
 }
