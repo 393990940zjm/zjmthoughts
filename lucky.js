@@ -42,7 +42,7 @@ window.operateEvents = {
 			$(".head,.container").hide()
 			
 			$("#childPage").show(); 
-			$("#childPage").attr("src","rj/write_love.html")
+			$("#childPage").attr("src","rj/write_lucky.html")
 			
 		}
 };
