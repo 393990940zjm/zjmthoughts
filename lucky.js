@@ -178,19 +178,3 @@ function touchScroll(el) {
         }
     }, {passive: false}) //passive防止阻止默认事件不生效
 }
-
-
-
-var access = AV.Object.extend('access');
-var access = new access();
-	access.save({
-		
-		createDate:new Date().getTime(),
-		ip:returnCitySN["cip"],
-		cname:returnCitySN['cname']
-	
-	}).then(function(object) {
-		
-		console.log('欢迎访问')
-
-})
