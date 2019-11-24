@@ -27,8 +27,8 @@ var APP_ID = '{{appid}}';
 var APP_KEY = '{{appkey}}';
  
 AV.init({
-  appId: 'KFgQElcSadU5UkzXNreHt1cB-gzGzoHsz',
-  appKey: 'yLASWKfAAaOnLc9toHMTq4K6'
+	appId: 'KFgQElcSadU5UkzXNreHt1cB-gzGzoHsz',
+	appKey: 'yLASWKfAAaOnLc9toHMTq4K6',
 });
 
 var flag_type = 2;
