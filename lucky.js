@@ -82,7 +82,7 @@ function showTable() {
 };
 
 
-AV.Query.doCloudQuery('select * from article where type = 5 order by createdDate desc').then(function (data) {
+AV.Query.doCloudQuery('select * from article where type = 6 order by createdDate desc').then(function (data) {
     console.log(data);
     $('#table').bootstrapTable('load',data.results);
 }, function (error) {
@@ -95,7 +95,7 @@ AV.Query.doCloudQuery('select * from article where type = 5 order by createdDate
 function toWz(flag){
 	
 	flag_type = flag;
-	AV.Query.doCloudQuery('select * from article where type = 5 order by createdDate desc').then(function (data) {
+	AV.Query.doCloudQuery('select * from article where type = 6 order by createdDate desc').then(function (data) {
 	    console.log(data);
 	    $('#table').bootstrapTable('load',data.results);
 	}, function (error) {
@@ -107,7 +107,7 @@ function toWz(flag){
 
 
 function refresh(){
-	AV.Query.doCloudQuery('select * from article where type = 5 order by createdDate desc').then(function (data) {
+	AV.Query.doCloudQuery('select * from article where type = 6 order by createdDate desc').then(function (data) {
 	    console.log(data);
 	    $('#table').bootstrapTable('load',data.results);
 	}, function (error) {
