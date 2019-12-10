@@ -87,6 +87,8 @@ pre {
 	width:300px; overflow: auto; overflow-y:hidden
 }
 #txtContent{
-	font-size: 16px;
+	font-size: 18px;
     margin-top: 16px;
+    color: #000000;
+    font-family: "微软雅黑";
 }
