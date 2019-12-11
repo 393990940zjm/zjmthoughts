@@ -9,14 +9,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/bootstrap-table.css" />
-    <link rel="stylesheet" href="lucky.css" />
+    <link rel="stylesheet" href="toMe.css" />
 </head>
 <body id="scroll" >
 	<div class="head" >
 
 		<div class="head1" >
-			<div class="head1_2" >给柳蓉的信
-				<span onclick="toMe()" style="display: none;" id="tome" >给对方的信</span>
+			<div class="head1_2" >给俊明的信
+				<span onclick="toloveForever()" >给自己的信</span>
+				<span style="float: right;" onclick="add()" >+</span>
 			</div>
 		</div>
 		
@@ -27,6 +28,24 @@
 
 	
 	<iframe frameborder='no' border='0' id="childPage" src="" ></iframe>
+	
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	                <h4 class="modal-title" id="myModalLabel">写信</h4>
+	            </div>
+	            <div class="modal-body">
+	            	<textarea id="addtext" ></textarea>
+	            </div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+	                <button type="button" class="btn btn-primary" onclick="saveAdd()" >保存</button>
+	            </div>
+	        </div><!-- /.modal-content -->
+	    </div><!-- /.modal -->
+	</div>
 
 </body>
 <script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.12.0/dist/av-min.js"></script>
@@ -35,6 +54,6 @@
 <script type="text/javascript" src="js/bootstrap.min.js" ></script>
 <script type="text/javascript" src="js/bootstrap-table.js" ></script>
 <script type="text/javascript" src="js/bootstrap-table-zh-CN.js" ></script>
-<script type="text/javascript" src="lucky.js" ></script>
+<script type="text/javascript" src="toMe.js" ></script>
 
 </html>

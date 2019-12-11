@@ -11,8 +11,8 @@ AV.init({
 
 var flag_type = 4;
 
-
-
+var flagAdd = 0; //0： 新增   1：修改
+var toMeId = '';
 
 
 
@@ -24,6 +24,7 @@ function operate(value, row, index) {
 		html +="  <div class='task_title' ><span>"+row._serverData.name+"</span></div>";
 		html +="  <div class='task_num'><span>浏览次数:</span><span>"+row._serverData.number+"</span></div>";
 		html +="  <div class='task_time'><span>发布时间:</span><span>"+formatDTime2(row._serverData.createdDate)+"</span></div>";
+		html +="  <div class='delete' onclick='deletex(this);' data-id='"+row.id+"' >删除</div>";
 		html +="</div>";
 
 
@@ -35,17 +36,68 @@ function operate(value, row, index) {
  */
 window.operateEvents = {
 		'click .task' : function(e, value, row, index) {
-			$("#childPage").attr("src","");
-			localStorage.setItem("name", row._serverData.name);
-			localStorage.setItem("id", row.id);
 			
-			$(".head,.container").hide()
+			if(e.toElement.className!="delete"){
+				toMeId = row.id;
+				$("#myModal").modal('show');
+				$("#addtext").val(row._serverData.content);
+				
+				var query = new AV.Query('article'); 
+				query.get(row.id).then(function (todo) {
+				    // 成功获得实例
+				    // todo 就是 id 为 57328ca079bc44005c2472d0 的 Todo 对象实例
+				    
+				    addRecord(todo);
+				    
+				    
+				}, function (error) {
+				    // 异常处理
+				    console.log(error);
+				});
+			}
 			
-			$("#childPage").show(); 
-			$("#childPage").attr("src","rj/write_lucky.html")
+	
 			
-		}
+//			$("#childPage").attr("src","");
+//			localStorage.setItem("name", row._serverData.name);
+//			localStorage.setItem("id", row.id);
+//			
+//			$(".head,.container").hide()
+//			
+//			$("#childPage").show(); 
+//			$("#childPage").attr("src","rj/write_lucky.html")
+			
+		},
+	
 };
+
+
+
+
+function addRecord(param){
+	console.log(param);
+	 var str = 'update article set number='+(param._serverData.number+1)+' where objectId="'+toMeId+'"';
+	AV.Query.doCloudQuery(str).then(function (data) {
+	  console.log(JSON.stringify(data));
+	}, function (error) {
+	  console.error(error);
+	});
+	
+	var Record = AV.Object.extend('record');
+	var record = new Record();
+		record.save(
+			{
+				articleId: toMeId,
+				name:param._serverData.name,
+				createDate:new Date().getTime(),
+				ip:returnCitySN["cip"],
+				cname:returnCitySN['cname']
+			}
+		).then(function(object) {
+			console.log(object);
+	})
+}
+
 
 
 showTable();
@@ -82,7 +134,7 @@ function showTable() {
 };
 
 
-AV.Query.doCloudQuery('select * from article where type = 6 order by createdDate desc').then(function (data) {
+AV.Query.doCloudQuery('select * from article where type = 7 order by createdDate desc').then(function (data) {
     console.log(data);
     $('#table').bootstrapTable('load',data.results);
 }, function (error) {
@@ -95,7 +147,7 @@ AV.Query.doCloudQuery('select * from article where type = 6 order by createdDate
 function toWz(flag){
 	
 	flag_type = flag;
-	AV.Query.doCloudQuery('select * from article where type = 6 order by createdDate desc').then(function (data) {
+	AV.Query.doCloudQuery('select * from article where type = 7 order by createdDate desc').then(function (data) {
 	    console.log(data);
 	    $('#table').bootstrapTable('load',data.results);
 	}, function (error) {
@@ -107,7 +159,7 @@ function toWz(flag){
 
 
 function refresh(){
-	AV.Query.doCloudQuery('select * from article where type = 6 order by createdDate desc').then(function (data) {
+	AV.Query.doCloudQuery('select * from article where type = 7 order by createdDate desc').then(function (data) {
 	    console.log(data);
 	    $('#table').bootstrapTable('load',data.results);
 	}, function (error) {
@@ -179,13 +231,76 @@ function touchScroll(el) {
     }, {passive: false}) //passive防止阻止默认事件不生效
 }
 
-function toMe(){
-	location.href='loveforeverToMe.html';
+function toloveForever(){
+	location.href='loveforever.html';
 }
 
-toMeif();
-function toMeif(){
-	if(new Date().getTime()>=1576238400000){
-		$("#tome").show();
+function add(){
+	$("#myModal").modal('show');
+}
+
+function saveAdd(){
+	
+	if($("#addtext").val()==""){
+		alert('请输入内容');
+		return false;
 	}
+	
+	if(flagAdd==0){
+		
+		var article = AV.Object.extend('article');
+	var article = new article();
+		article.save({
+			
+			content: $("#addtext").val(),
+			createdDate:new Date().getTime(),
+			name:formatDTime2(new Date().getTime()),
+			number:0,
+			type:7,
+			discuss:0
+		
+		}).then(function(object) {
+			$("#myModal").modal('hide');
+			$("#addtext").val('');
+			refresh();
+	})
+		
+	}else if(flagAdd==1){
+		
+		AV.Query.doCloudQuery('update article set content="'+$("#addtext").val()+'" where objectId="'+toMeId+'"')
+			.then(function (data) {
+			    // data 中的 results 是本次查询返回的结果，AV.Object 实例列表
+			    var results = data.results;
+			    console.log(JSON.stringify(data));
+			}, function (error) {
+			    // 异常处理
+			    console.error(error);
+		});
+		
+	}
+	
+	
+	
+}
+
+function deletex(param){
+	
+	toMeId = $(param).data('id');
+	
+	 if(confirm("确定要删除吗？")){
+	 	
+	      AV.Query.doCloudQuery('update article set type=-1 where objectId="'+toMeId+'"')
+			.then(function (data) {
+			    // data 中的 results 是本次查询返回的结果，AV.Object 实例列表
+//			    var results = data.results;
+//			    console.log(JSON.stringify(data));
+				refresh();
+				alert('已删除');
+			}, function (error) {
+			    // 异常处理
+			    console.error(error);
+		});
+	  }
+	
+	return false;
 }
