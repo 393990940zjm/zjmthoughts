@@ -1,0 +1,16 @@
+<h1>《那些年》</h1>
+<h3>2012年度电子杂志</h3>
+
+<img width="100%" src='../childImg/img/nxn1.png' />
+<img width="100%" src='../childImg/img/nxn2.png' />
+<img width="100%" src='../childImg/img/nxn3.png' />
+<img width="100%" src='../childImg/img/nxn4.png' />
+<img width="100%" src='../childImg/img/nxn5.png' />
+<img width="100%" src='../childImg/img/nxn6.png' />
+<img width="100%" src='../childImg/img/nxn7.png' />
+<img width="100%" src='../childImg/img/nxn8.png' />
+
+<b>下载地址：(注：需要PC进行下载观看)</b>
+<br>
+<a href='https://pan.baidu.com/s/1Z4Zja6Ca-fPZKhCNBv8uXQ' >https://pan.baidu.com/s/1Z4Zja6Ca-fPZKhCNBv8uXQ</a>
+<div>提取码：67l3</div>

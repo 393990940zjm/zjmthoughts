@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Expires" content="0" />				
+		<title></title>
+		<link rel="stylesheet" href="../css/bootstrap.min.css" />
+		<link rel="stylesheet" href="../css/childPage_love.css" />
+	</head>
+	<body>
+		<div class="head" >
+			<p onclick="back()" ><img src="../childImg/back2.png" />返回</p>
+		</div>
+		<div class="container">
+		    <div class="row" >
+		        <div class="col-xs-12 col-sm-12" >					
+					<div id="txtContent" >
+					</div>
+					<h3 style="border-bottom: 1px solid #000000;" >评论
+						<button class="btn btn-default" onclick="alertDiss()" style="margin-left: 10px;margin-top: -5px;" >填写</button>
+					</h3>
+					<div class="dissTaskContent" >
+					</div>
+		        </div>
+ 		</div>
+	</div>
+	<!-- 模态框（Modal） -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	                <h4 class="modal-title" id="myModalLabel">评论</h4>
+	            </div>
+	            <div class="modal-body">
+	            	<textarea id="dissIn" ></textarea>
+	            </div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+	                <button type="button" class="btn btn-primary" onclick="addDiss()" >发布</button>
+	            </div>
+	        </div><!-- /.modal-content -->
+	    </div><!-- /.modal -->
+	</div>
+	</body>
+	<script src="//cdn.jsdelivr.net/npm/leancloud-storage@3.12.0/dist/av-min.js"></script>
+	<script type="text/javascript" src="../js/jquery-1.11.2.min.js" ></script>
+	<script src="http://pv.sohu.com/cityjson?ie=utf-8" ></script>
+	<script type="text/javascript" src="../js/bootstrap.min.js" ></script>
+	<script type="text/javascript" src="../js/childPage_love.js" ></script>
+</html>
