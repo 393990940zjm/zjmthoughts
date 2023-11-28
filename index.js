@@ -123,25 +123,31 @@ function dayScripture() {
 
 function operate(value, row, index) {
    	var html = "";
+	
+	html +="<div class='task' >"
+	html +="  <div class='task_title' ><span>"+row.name+"</span></div>";
+	html +="  <div class='task_num'><span>浏览次数:</span><span>"+20+"</span></div>";
+	html +="  <div class='task_time'><span>发布时间:</span><span>"+formatDTime2(new Date().getTime())+"</span></div>";
+	html +="</div>";
    	
-   	if(row._serverData.type==3){
-   		html +="<div class='task' style='height:90px;' >";
-   		html +="	<div class='task_left' >";
-   		html +="		<img src='"+row._serverData.img+"' />";
-   		html +="	</div>";
-   		html +="	<div class='task_right' >";
-		html +="       <div class='task_title' ><span>"+row._serverData.name+"</span></div>";
-		html +="       <div class='task_num'><span>浏览次数:</span><span>"+row._serverData.number+"</span></div>";
-		html +="       <div class='task_time'><span>发布时间:</span><span>"+formatDTime2(row._serverData.createdDate)+"</span></div>";   					
-   		html +="	</div>";
-		html +="</div>";
-   	}else{
-	   	html +="<div class='task' >"
-		html +="  <div class='task_title' ><span>"+row._serverData.name+"</span></div>";
-		html +="  <div class='task_num'><span>浏览次数:</span><span>"+row._serverData.number+"</span></div>";
-		html +="  <div class='task_time'><span>发布时间:</span><span>"+formatDTime2(row._serverData.createdDate)+"</span></div>";
-		html +="</div>";
-   	}
+  //  	if(row._serverData.type==3){
+  //  		html +="<div class='task' style='height:90px;' >";
+  //  		html +="	<div class='task_left' >";
+  //  		html +="		<img src='"+row._serverData.img+"' />";
+  //  		html +="	</div>";
+  //  		html +="	<div class='task_right' >";
+		// html +="       <div class='task_title' ><span>"+row._serverData.name+"</span></div>";
+		// html +="       <div class='task_num'><span>浏览次数:</span><span>"+row._serverData.number+"</span></div>";
+		// html +="       <div class='task_time'><span>发布时间:</span><span>"+formatDTime2(row._serverData.createdDate)+"</span></div>";   					
+  //  		html +="	</div>";
+		// html +="</div>";
+  //  	}else{
+	 //   	html +="<div class='task' >"
+		// html +="  <div class='task_title' ><span>"+row._serverData.name+"</span></div>";
+		// html +="  <div class='task_num'><span>浏览次数:</span><span>"+row._serverData.number+"</span></div>";
+		// html +="  <div class='task_time'><span>发布时间:</span><span>"+formatDTime2(row._serverData.createdDate)+"</span></div>";
+		// html +="</div>";
+  //  	}
 
 	
 	return html;
@@ -162,6 +168,7 @@ window.operateEvents = {
 			
 		}
 };
+
 
 
 showTable();
@@ -197,7 +204,25 @@ function showTable() {
 	
 };
 
+var directoryData = [
+	{
+		name: "主日传道"
+	},
+	{
+		name: "诗篇三十首"
+	},
+	{
+		name: "灵修三十问"
+	},
+	{
+		name: "简读圣经"
+	},
+	{
+		name: "教会历史"
+	}
+]
 
+$('#table').bootstrapTable('load',directoryData);
 // AV.Query.doCloudQuery('select * from article where type = 2 order by createdDate desc').then(function (data) {
 //     console.log(data);
 //     $('#table').bootstrapTable('load',data.results);
