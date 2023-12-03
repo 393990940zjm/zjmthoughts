@@ -6,6 +6,7 @@
   Backendless.serverURL = 'https://api.backendless.com';
   Backendless.initApp(APP_ID, API_KEY);
   
+  
   // Backendless.Data.of( "TestTable2" ).save( { foo:"bar" } )
   //     .then( function( obj ) {
   //         console.log( "object saved. objectId " + obj.objectId )
@@ -63,29 +64,29 @@
 
 
 
-// 创建一个数据查询
-var queryBuilder = Backendless.DataQueryBuilder.create();
+// // 创建一个数据查询
+// var queryBuilder = Backendless.DataQueryBuilder.create();
 
-// 查询 writeTable 表的数据
-Backendless.Data.of('writeTable').find(queryBuilder)
-  .then(function(result) {
-    // 查询成功，result 包含了所有数据
-    // 对查询结果进行处理，计算每个类型的数量
-    var typeCounts = {}; // 用于存储每个类型的数量
+// // 查询 writeTable 表的数据
+// Backendless.Data.of('writeTable').find(queryBuilder)
+//   .then(function(result) {
+//     // 查询成功，result 包含了所有数据
+//     // 对查询结果进行处理，计算每个类型的数量
+//     var typeCounts = {}; // 用于存储每个类型的数量
 
-    // 遍历每条数据，统计每个类型的数量
-    result.forEach(function(item) {
-      var type = item.type; // 假设类型保存在 type 字段中
-      typeCounts[type] = (typeCounts[type] || 0) + 1; // 计算每个类型出现的次数
-    });
+//     // 遍历每条数据，统计每个类型的数量
+//     result.forEach(function(item) {
+//       var type = item.type; // 假设类型保存在 type 字段中
+//       typeCounts[type] = (typeCounts[type] || 0) + 1; // 计算每个类型出现的次数
+//     });
 
-    // 输出每个类型的数量
-    console.log('每个类型的数量:', typeCounts);
-  })
-  .catch(function(error) {
-    // 查询失败，处理错误
-    console.error('查询失败:', error);
-  });
+//     // 输出每个类型的数量
+//     console.log('每个类型的数量:', typeCounts);
+//   })
+//   .catch(function(error) {
+//     // 查询失败，处理错误
+//     console.error('查询失败:', error);
+//   });
 
 
 
@@ -165,3 +166,17 @@ Backendless.Data.of('writeTable').find(queryBuilder)
   // createObject().then(onObjectCreate)
 })();
                 
+function formatDTime2(time) {
+	var Rime = "";
+	if(time != 0){
+		var date = new Date(time);
+		var y = date.getFullYear();
+		var M = date.getMonth()<9 ? '0'+(date.getMonth()+1) : (date.getMonth()+1);
+		var d = date.getDate()<10 ? '0'+date.getDate() : date.getDate();
+		var h = date.getHours()<10 ? '0'+date.getHours() : date.getHours();
+		var m = date.getMinutes()<10 ? '0'+date.getMinutes() : date.getMinutes();
+		var s = date.getSeconds()<10 ? '0'+date.getSeconds() : date.getSeconds();
+		Rime = y+"-"+M+"-"+d+" "+h+":"+m+":"+s;
+	}
+	return Rime;
+}

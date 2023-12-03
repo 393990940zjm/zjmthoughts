@@ -1,0 +1,69 @@
+.bootstrap-table .table:not(.table-condensed), .bootstrap-table .table:not(.table-condensed) > tbody > tr > th, .bootstrap-table .table:not(.table-condensed) > tfoot > tr > th, .bootstrap-table .table:not(.table-condensed) > thead > tr > td, .bootstrap-table .table:not(.table-condensed) > tbody > tr > td, .bootstrap-table .table:not(.table-condensed) > tfoot > tr > td {
+    padding: 0px;
+}
+.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td {
+    border-top: 0px solid #ddd;
+}
+.fixed-table-container {
+    border: 0px solid #dddddd;
+}
+.bootstrap-table .table {
+    border-bottom: 0px solid #dddddd; 
+}
+.table>thead>tr>th {
+    vertical-align: bottom;
+    border-bottom: 0px solid #ddd;
+}
+.task{
+	text-align: left;
+    /* border: 1px solid #ddd; */
+    padding: 10px;
+    /* margin-bottom: 20px; */
+    /* width: 95%; */
+    border-radius: 10px;
+    /* border-top: 6px solid #f4f4f4; */
+    background: #ddd;
+	height: 60px;
+	margin-top: 10px;
+    /* box-shadow: darkgrey 5px 5px 10px 2px; */
+}
+.task_title{
+	font-size: 15px;
+	font-weight: bold;
+	margin-bottom: 5px;
+}
+.task_num{
+	float: left;
+	font-size: 12px;
+}
+.task_time{
+	float: right;
+	font-size: 12px;
+}
+.head{
+	position:fixed; 
+    top:0; 
+    left:0; 
+    z-index:99; 
+	height: 50px;
+	width: 100%;
+ 	background: #f4f4f4;
+}
+.head p{
+	font-size: 20px;
+    line-height: 50px;
+    padding-left: ;
+}
+.head p img{
+    height: 18px;
+    margin-top: -3px;
+}
+#table{
+	margin-top: 0!important;
+}
+.tasks{
+	margin: 30px 0;
+}
+body{
+	overflow: hidden;
+}
