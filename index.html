@@ -22,9 +22,9 @@
 		
 		
 		<div class="head0" >
-			<div class="head0_d d_active" onclick="headTab(this,'01')" >最新</div>
-			<div class="head0_d" onclick="headTab(this,'02')" >好书</div>
-			<div class="head0_d" onclick="headTab(this,'03')" >活动</div>
+			<div class="head0_d d_active" onclick="headTab(this,'01')" >清心首页</div>
+			<!-- <div class="head0_d" onclick="headTab(this,'02')" >好书</div>
+			<div class="head0_d" onclick="headTab(this,'03')" >活动</div> -->
 		</div>
 		<div class="head1" >
 			<div class="head1_d d_active" onclick="headTab(this,'11')" >福音版块</div>
@@ -41,7 +41,7 @@
 	<div class="container" id="article0" style="height: calc( 100vh - 100px );overflow: auto;"  >
 		<div class="homed home1" >
 			<!--轮播-->
-			<div class="home1_1" >
+			<div id="contentToExport" class="home1_1" >
 				<p class="home1_1_head" >
 					<span>|</span>每日金句
 				</p>
@@ -55,22 +55,23 @@
 					</div>
 				</div>
 			</div>
+			<button class="btn btn-default btn-sm" id="exportButton">导出图文</button>
 			<!--热门杂志-->
 			<div class="home1_2" >
 				<p class="home1_2_head" >
-					<span>|</span>最近更新
+					<span>|</span>热门阅读
 				</p>
 				<div class="home1_2content" >
 				</div>
 			</div>
 			<!--热门推荐-->
-			<div class="home1_3" >
+			<!-- <div class="home1_3" >
 				<p class="home1_3_head" >
-					<span>|</span>热门阅读
+					<span>|</span>最近更新
 				</p>
 				<div class="home1_3content" >
 				</div>
-			</div>
+			</div> -->
 			<!--数据统计-->
 			<div class="home1_4" >
 				<p class="home1_4_head" >
@@ -176,6 +177,7 @@
 
 </body>
 <script src="//api.backendless.com/sdk/js/latest/backendless.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
 <script type="text/javascript" src="js/jquery-1.11.2.min.js" ></script>
 <script src="http://pv.sohu.com/cityjson?ie=utf-8" ></script>
 <script type="text/javascript" src="js/bootstrap.min.js" ></script>

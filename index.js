@@ -424,8 +424,39 @@ function toWz_d(param){
 }
 
 /*********************热门原创杂志**********************/
-
+hotZz();
 function hotZz(){
+	
+	$.ajax({
+	  url: 'json/fy.json',
+	  dataType: 'json',
+	  success: function(data) {
+	    // 获取 JSON 文件中的数据
+		
+		const result = getTop5ByReadNum(data);
+		console.log(result);
+		
+		var html = "";
+		for(var i=0;i<result.length;i++){
+			html += '<div class="home1_3d"  onclick="toWz_d(this)" >';
+			html += '	<span>'+(i+1)+'</span>';
+			html += '	<span>'+result[i].title+'</span>';
+			html += '	<span>阅读量    : '+result[i].readNum+'</span>';
+			html += '</div>';
+		}
+		$(".home1_2content").html(html)
+	
+	    // 可以对 data 进行其他操作
+	  },
+	  error: function(xhr, status, error) {
+	    console.error('发生错误:', error);
+	  }
+	});
+	
+	
+	
+
+	
 	// AV.Query.doCloudQuery('select * from article where type = 3 order by createDate desc limit 0,3').then(function (data) {
 	//     console.log(data);
 	//     var html = "";
@@ -440,6 +471,29 @@ function hotZz(){
 	//     console.log(JSON.stringify(error));
 	// });  
 }
+
+function getTop5ByReadNum(jsonData) {
+  const data = jsonData;
+  let allObjects = [];
+
+  // Combine all objects with readNum into a single array
+  for (const key in data) {
+    if (Array.isArray(data[key])) {
+      const objectsWithReadNum = data[key].filter(item => item.hasOwnProperty('readNum'));
+      allObjects = allObjects.concat(objectsWithReadNum);
+    }
+  }
+
+  // Sort objects by readNum in descending order
+  const sortedObjects = allObjects.sort((a, b) => b.readNum - a.readNum);
+
+  // Take the top 5 objects
+  const top10 = sortedObjects.slice(0, 10);
+
+  return top10;
+}
+
+
 
 function toWz_z(param){
 	$("#childPage").attr("src","");
@@ -673,3 +727,18 @@ function touchScroll(el) {
     }, {passive: false}) //passive防止阻止默认事件不生效
 }
 
+ document.getElementById('exportButton').addEventListener('click', function() {
+  const elementToExport = document.getElementById('contentToExport');
+
+  html2canvas(elementToExport).then(canvas => {
+	// Convert canvas to image and create a download link
+	const imgData = canvas.toDataURL('image/png');
+	const img = new Image();
+	img.src = imgData;
+
+	const link = document.createElement('a');
+	link.download = 'exported_image.png';
+	link.href = img.src;
+	link.click();
+  });
+});
