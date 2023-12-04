@@ -413,18 +413,26 @@ function hotRead(){
 }
 
 function toWz_d(param){
-	$("#childPage").attr("src","");
-	localStorage.setItem("name", $(param).data('name'));
-	localStorage.setItem("id", $(param).data('id'));
+	// $("#childPage").attr("src","");
+	// localStorage.setItem("name", $(param).data('name'));
+	// localStorage.setItem("id", $(param).data('id'));
 	
+	// $(".head,.footer").hide();
+	
+	// $("#childPage").show(); 
+	// $("#childPage").attr("src","wz/write.html")
 	$(".head,.footer").hide();
+	localStorage.setItem("fy_type", $(param).data('type'));
+	localStorage.setItem("fy_name", $(param).data('title'));
+	localStorage.setItem("fy_index", $(param).data('index'));
 	
-	$("#childPage").show(); 
-	$("#childPage").attr("src","wz/write.html")
+	$("#childPage" , parent.document).hide();
+	$("#childPage2" , parent.document).show();
+	$("#childPage2" , parent.document).attr("src","write2.html")
 }
 
 /*********************热门原创杂志**********************/
-hotZz();
+
 function hotZz(){
 	
 	$.ajax({
@@ -434,11 +442,11 @@ function hotZz(){
 	    // 获取 JSON 文件中的数据
 		
 		const result = getTop5ByReadNum(data);
-		console.log(result);
+		// console.log(result);
 		
 		var html = "";
 		for(var i=0;i<result.length;i++){
-			html += '<div class="home1_3d"  onclick="toWz_d(this)" >';
+			html += '<div class="home1_3d" data-title="'+result[i].title+'" data-index="'+result[i].index+'" data-type="'+result[i].type+'" onclick="toWz_d(this)" >';
 			html += '	<span>'+(i+1)+'</span>';
 			html += '	<span>'+result[i].title+'</span>';
 			html += '	<span>阅读量    : '+result[i].readNum+'</span>';
@@ -475,6 +483,30 @@ function hotZz(){
 function getTop5ByReadNum(jsonData) {
   const data = jsonData;
   let allObjects = [];
+  
+  for (const key in data) {
+	  if (Array.isArray(data[key])) {
+		  // var dataType = data[key];
+		  for(var i=0; i<data[key].length; i++) {
+			  if(localStorage.getItem("readArr")) {
+				  var readArr = JSON.parse(localStorage.getItem("readArr"));
+				  
+				  // console.log(777,readArr);
+				  for(const key2 in readArr) {
+					// console.log(666, data[key][i]);
+					var keyData = key2.split('_');
+					var type = keyData[0];
+					var index = keyData[1];
+					var num = readArr[key2];
+					// console.log(777,index)
+				  	if(data[key][i].index == index && data[key][i].type == type) {
+						data[key][i].readNum = num;
+					}
+				  }
+			  }
+		  }
+	  }
+  }
 
   // Combine all objects with readNum into a single array
   for (const key in data) {
@@ -494,16 +526,31 @@ function getTop5ByReadNum(jsonData) {
 }
 
 
+// function myFunction(param) {
+// 	localStorage.setItem("fy_name", $(param).data('title'));
+// 	localStorage.setItem("fy_index", $(param).data('index'));
+	
+// 	$("#childPage" , parent.document).hide();
+// 	$("#childPage2" , parent.document).show();
+// 	$("#childPage2" , parent.document).attr("src","write.html")
+// }
 
 function toWz_z(param){
-	$("#childPage").attr("src","");
-	localStorage.setItem("name", $(param).data('name'));
-	localStorage.setItem("id", $(param).data('id'));
+	// $("#childPage").attr("src","");
+	// localStorage.setItem("name", $(param).data('name'));
+	// localStorage.setItem("id", $(param).data('id'));
 	
-	$(".head,.footer").hide();
+	// $(".head,.footer").hide();
 	
-	$("#childPage").show(); 
-	$("#childPage").attr("src","wz/write.html")
+	// $("#childPage").show(); 
+	// $("#childPage").attr("src","wz/write.html")
+	localStorage.setItem("fy_type", $(param).data('type'));
+	localStorage.setItem("fy_name", $(param).data('title'));
+	localStorage.setItem("fy_index", $(param).data('index'));
+	
+	$("#childPage" , parent.document).hide();
+	$("#childPage2" , parent.document).show();
+	$("#childPage2" , parent.document).attr("src","write.html")
 }
 
 
@@ -531,6 +578,41 @@ function showStatistics(){
 	//     // 查询失败，处理错误
 	//     console.error('查询失败:', error);
 	//   });
+	
+	$.ajax({
+	  url: 'json/readRecord.json',
+	  dataType: 'json',
+	  success: function(result) {
+		// 获取当前时间戳
+		var currentTimeStamp = Date.now();
+		
+		// 获取昨日的时间戳
+		var oneDayMilliseconds = 24 * 60 * 60 * 1000; // 一天的毫秒数
+		var yesterdayTimeStamp = currentTimeStamp - oneDayMilliseconds;
+		
+		// 示例的 JSON 数组数据
+		var jsonArray = result;
+		
+		// 计算昨日数据条数
+		var yesterdayDataCount = 0;
+		
+		jsonArray.forEach(item => {
+		  if (item.created >= yesterdayTimeStamp && item.created < currentTimeStamp) {
+		    yesterdayDataCount++;
+		  }
+		});
+		
+		console.log('昨日数据条数:', yesterdayDataCount);  
+		$(".drYd").html(yesterdayDataCount);
+		$(".lsYd").html(result.length);
+	  },
+	  error: function(xhr, status, error) {
+	    console.error('发生错误:', error);
+	  }
+	});
+	  
+	
+	  
 	  
 	//   Backendless.Data.of('readTable').getObjectCount(queryBuilder)
 	//     .then(function(count) {
@@ -609,7 +691,7 @@ function headTab(param,num){
 			hotRead();
 			hotZz();
 			showStatistics();
-			showStatistics();
+			// showStatistics();
 			break;
 		case '02':
 			$(".homed").hide();
@@ -727,18 +809,96 @@ function touchScroll(el) {
     }, {passive: false}) //passive防止阻止默认事件不生效
 }
 
- document.getElementById('exportButton').addEventListener('click', function() {
-  const elementToExport = document.getElementById('contentToExport');
+//  document.getElementById('exportButton').addEventListener('click', function() {
+//   const elementToExport = document.getElementById('contentToExport');
 
-  html2canvas(elementToExport).then(canvas => {
-	// Convert canvas to image and create a download link
-	const imgData = canvas.toDataURL('image/png');
-	const img = new Image();
-	img.src = imgData;
+//   html2canvas(elementToExport).then(canvas => {
+// 	// Convert canvas to image and create a download link
+// 	const imgData = canvas.toDataURL('image/png');
+// 	const img = new Image();
+// 	img.src = imgData;
 
-	const link = document.createElement('a');
-	link.download = 'exported_image.png';
-	link.href = img.src;
-	link.click();
-  });
-});
+// 	const link = document.createElement('a');
+// 	link.download = 'exported_image.png';
+// 	link.href = img.src;
+// 	link.click();
+//   });
+// });
+
+
+histroyRead();
+function histroyRead() {
+	// var queryBuilder = Backendless.DataQueryBuilder.create();
+	
+
+ //  queryBuilder.setPageSize(10000); // 设置每页返回的数据量
+ //  queryBuilder.setOffset(0); // 设置偏移量，0 表示第一页
+	// // 查询 readTable 表的数据
+	// Backendless.Data.of('readTable').find()
+	//   .then(function(result) {
+	// 	console.log(7788,result)
+	//     // 查询成功，result 包含了所有数据
+	//     // 对 flag 字段进行统计
+
+	// 	hotZz();
+	//   })
+	//   .catch(function(error) {
+	//     // 查询失败，处理错误
+	//     console.error('查询失败:', error);
+	// 	hotZz();
+	//   });
+	$.ajax({
+	  url: 'json/readRecord.json',
+	  dataType: 'json',
+	  success: function(result) {
+		localStorage.setItem("readRecord",JSON.stringify(result));
+	    // 获取 JSON 文件中的数据
+	    var flagCount = {}; // 用于存储 flag 字段对应的数据条数
+	
+	    result.forEach(item => {
+	      var flag = item['flag'];
+	      flagCount[flag] = (flagCount[flag] || 0) + 1;
+	    });
+		
+		localStorage.setItem("readArr",JSON.stringify(flagCount));
+	
+		
+	    // 输出每个 flag 值对应的数据条数
+	    for (var flag in flagCount) {
+	      console.log(`Flag 值为 ${flag} 的数据条数: ${flagCount[flag]}`);
+	    }
+		hotZz();
+		showStatistics();
+	    // 可以对 data 进行其他操作
+	  },
+	  error: function(xhr, status, error) {
+	    console.error('发生错误:', error);
+	  }
+	});
+}
+
+
+// 检查是否在微信环境中
+function isWeChat() {
+  var ua = window.navigator.userAgent.toLowerCase();
+  return ua.indexOf('micromessenger') !== -1;
+}
+
+// 分享当前页面链接到微信
+function shareToWeChat() {
+  if (isWeChat()) {
+    var shareData = {
+      title: document.title,
+      desc: '这是分享描述',
+      link: window.location.href,
+    };
+
+    // 调用微信分享接口
+    wx.ready(function () {
+      wx.updateAppMessageShareData(shareData);
+      wx.updateTimelineShareData(shareData);
+    });
+  } else {
+    console.log('非微信环境，无法分享到微信');
+  }
+}

@@ -135,12 +135,29 @@ function showTable() {
 		var result = eval('data.type' + localStorage.getItem("fy_type"))
 		
 		var html = "";
+		
+		for(var i=0;i<result.length;i++) {
+			var readArr = JSON.parse(localStorage.getItem("readArr"));
+			// console.log(777,readArr);
+			for(const key2 in readArr) {
+				// console.log(666, data[key][i]);
+				var keyData = key2.split('_');
+				var type = keyData[0];
+				var index = keyData[1];
+				var num = readArr[key2];
+				if(result[i].index == index && result[i].type == type) {
+					result[i].readNum = num;
+				}
+			}
+		}
+		
+		
 		for(var i=0;i<result.length;i++) {
 			
 			if(result[i].index > 0) {
 				html +="<div class='task' data-title='"+result[i].title+"' data-index='"+result[i].index+"' onclick='myFunction(this)' >"
 				html +="  <div class='task_title' ><span>"+result[i].title+"</span></div>";
-				// html +="  <div class='task_num'><span>浏览次数 : </span><span>"+result[i].readNum+"</span></div>";
+				html +="  <div class='task_num'><span>历史阅读次数 : </span><span>"+result[i].readNum+"</span></div>";
 				// html +="  <div class='task_time'><span>发布时间 : </span><span>"+formatDTime2(row.created)+"</span></div>";
 				html +="</div>";
 			} else {

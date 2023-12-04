@@ -68,10 +68,10 @@ function c1(color) {
 
 function back(){
 	// window.parent.refresh();
-	$("#childPage" , parent.document).show();
+	// $("#childPage" , parent.document).show();
 	$("#childPage2" , parent.document).hide();
 	$("#childPage2" , parent.document).attr("src","")
-	// $(".head,.footer" , parent.document).show();
+	$(".head,.footer" , parent.document).show();
 	// $(".head,.footer").show();
 }
 

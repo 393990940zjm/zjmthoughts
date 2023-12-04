@@ -14,28 +14,6 @@
     vertical-align: bottom;
     border-bottom: 0px solid #ddd;
 }
-.task{
-	text-align: left;
-    /* border: 1px solid #ddd; */
-    padding: 10px;
-    /* margin-bottom: 20px; */
-    /* width: 95%; */
-    border-radius: 10px;
-    /* border-top: 6px solid #f4f4f4; */
-    background: #ddd;
-	height: 60px;
-	margin-top: 10px;
-    /* box-shadow: darkgrey 5px 5px 10px 2px; */
-}
-.task_title{
-	font-size: 15px;
-	font-weight: bold;
-	margin-bottom: 5px;
-}
-.task_num{
-	float: left;
-	font-size: 12px;
-}
 .task_time{
 	float: right;
 	font-size: 12px;
@@ -66,4 +44,25 @@
 }
 body{
 	overflow: hidden;
+}
+
+.task {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.task_title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+.task_num {
+  margin-top: 5px;
+  font-size: 14px;
+  color: #666;
 }
