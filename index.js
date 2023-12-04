@@ -584,26 +584,33 @@ function showStatistics(){
 	  dataType: 'json',
 	  success: function(result) {
 		// 获取当前时间戳
-		var currentTimeStamp = Date.now();
+		// 获取当前时间的时间戳
+		const currentTimeStamp = Date.now();
 		
-		// 获取昨日的时间戳
-		var oneDayMilliseconds = 24 * 60 * 60 * 1000; // 一天的毫秒数
-		var yesterdayTimeStamp = currentTimeStamp - oneDayMilliseconds;
+		// 获取昨天的时间戳
+		const oneDayMilliseconds = 24 * 60 * 60 * 1000; // 一天的毫秒数
+		const yesterdayTimeStamp = currentTimeStamp - oneDayMilliseconds;
 		
-		// 示例的 JSON 数组数据
-		var jsonArray = result;
+		// 获取昨天 00:00:00 的时间戳
+		const yesterdayStart = new Date(yesterdayTimeStamp);
+		yesterdayStart.setHours(0, 0, 0, 0);
+		const yesterdayStartTimeStamp = yesterdayStart.getTime();
 		
-		// 计算昨日数据条数
-		var yesterdayDataCount = 0;
+		// 获取昨天 23:59:59 的时间戳
+		const yesterdayEnd = new Date(yesterdayTimeStamp);
+		yesterdayEnd.setHours(23, 59, 59, 999);
+		const yesterdayEndTimeStamp = yesterdayEnd.getTime();
 		
-		jsonArray.forEach(item => {
-		  if (item.created >= yesterdayTimeStamp && item.created < currentTimeStamp) {
-		    yesterdayDataCount++;
-		  }
-		});
+		// 给定的数据
+		const data = result;
 		
-		console.log('昨日数据条数:', yesterdayDataCount);  
-		$(".drYd").html(yesterdayDataCount);
+		// 计算昨天 00:00:00 到 23:59:59 的数据条数
+		const yesterdayData = data.filter(
+		  (item) => item.created >= yesterdayStartTimeStamp && item.created <= yesterdayEndTimeStamp
+		);
+		
+		console.log(`昨日数据条数：${yesterdayData.length}`);
+		$(".drYd").html(yesterdayData.length);
 		$(".lsYd").html(result.length);
 	  },
 	  error: function(xhr, status, error) {
@@ -878,27 +885,3 @@ function histroyRead() {
 }
 
 
-// 检查是否在微信环境中
-function isWeChat() {
-  var ua = window.navigator.userAgent.toLowerCase();
-  return ua.indexOf('micromessenger') !== -1;
-}
-
-// 分享当前页面链接到微信
-function shareToWeChat() {
-  if (isWeChat()) {
-    var shareData = {
-      title: document.title,
-      desc: '这是分享描述',
-      link: window.location.href,
-    };
-
-    // 调用微信分享接口
-    wx.ready(function () {
-      wx.updateAppMessageShareData(shareData);
-      wx.updateTimelineShareData(shareData);
-    });
-  } else {
-    console.log('非微信环境，无法分享到微信');
-  }
-}

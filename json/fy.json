@@ -814,30 +814,28 @@
 		},
 		{
 			"title":"中世纪教会",
-			"index":1,
+			"index":2,
 			"type":6,
 			"readNum":0
 		},
 		{
 			"title":"宗教改革",
-			"index":1,
+			"index":3,
 			"type":6,
 			"readNum":0
 		},
 		{
 			"title":"近现代教会",
-			"index":1,
+			"index":4,
 			"type":6,
 			"readNum":0
 		},
 		{
 			"title":"教会在中国的历史",
-			"index":1,
+			"index":5,
 			"type":6,
 			"readNum":0
 		}
 	],
-	"type7":[
-		{}
-	]
+	"type7":[]
 }
