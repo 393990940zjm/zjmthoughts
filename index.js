@@ -151,7 +151,7 @@ function searchOpenCard() {
 		  bibleStudyIs = true;
 		  $("#bibleStudy").html('今日已打卡!');
 	  } else {
-		  bibleStudyIs = true;
+		  bibleStudyIs = false;
 		  $("#bibleStudy").html('读经打卡！');
 	  }
 	}).catch(error => {
