@@ -316,7 +316,7 @@ th{
 }
 .home1_4{
 	padding: 10px;
-	height: 130px;
+	/* height: 130px; */
 	width: 100%;
 	background: #fff;
 	border-top:8px solid #f4f4f4;
@@ -460,4 +460,26 @@ th{
 	text-align: center;
 	color: #157EFB;
 	letter-spacing: 1px;
+}
+.modal{
+	top:20%;
+}
+.titleTip{
+	margin-top: 20px;
+	font-size: 13px;
+	text-align: left;
+	text-indent: 2em;
+}
+#saveButton{
+	width: 100%;
+	letter-spacing: 2px;
+}
+.btn-info {
+    background-color: #167efb;
+    border-color: #167efb;
+}
+.btn-info:hover, .btn-info:focus, .btn-info:active, .btn-info.active, .open .dropdown-toggle.btn-info {
+    color: #fff;
+    background-color: #167efb;
+    border-color: #167efb;
 }

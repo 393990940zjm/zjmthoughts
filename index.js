@@ -22,6 +22,8 @@ window.onload = function(){
  }
 }
 
+var bibleStudyId = '';
+var bibleStudyIs = false;
 
 // var APP_ID = '{{appid}}';
 // var APP_KEY = '{{appkey}}';
@@ -91,50 +93,119 @@ window.onload = function(){
 // 每日金句  
 dayScripture()  
 function dayScripture() {
-	$.ajax({
-	  url: 'json/mrjj.json',
-	  dataType: 'json',
-	  success: function(data) {
-	    // 获取 JSON 文件中的数据
-		console.log(data)
-		$(".home1_1_content .dd").html(data.wirteData[0].Attribution);
-		$(".home1_1_content .zw").html(data.wirteData[0].content);
-		$(".home1_1_content .ly").html(data.wirteData[0].Preface);
-		$(".home1_1_content .sy").html(data.wirteData[0].mean);
+	// $.ajax({
+	//   url: 'json/mrjj.json',
+	//   dataType: 'json',
+	//   success: function(data) {
+	//     // 获取 JSON 文件中的数据
+	// 	// console.log(data)
+	// 	$(".home1_1_content .dd").html(data.wirteData[0].Attribution);
+	// 	$(".home1_1_content .zw").html(data.wirteData[0].content);
+	// 	$(".home1_1_content .ly").html(data.wirteData[0].Preface);
+	// 	$(".home1_1_content .sy").html(data.wirteData[0].mean);
 	
-	    // 可以对 data 进行其他操作
-	  },
-	  error: function(xhr, status, error) {
-	    console.error('发生错误:', error);
-	  }
+	//     // 可以对 data 进行其他操作
+	//   },
+	//   error: function(xhr, status, error) {
+	//     console.error('发生错误:', error);
+	//   }
+	// });
+
+
+	var query = new AV.Query('bibleStudy');
+	
+	// 设置查询条件
+	query.equalTo('date', formatDate(new Date()));
+	
+	// 查询操作
+	query.find().then((results) => {
+		if (results.length > 0) {
+			bibleStudyId = results[0].id;
+			$(".home1_1_content .dd").html(results[0]._serverData.Attribution);
+			$(".home1_1_content .zw").html(results[0]._serverData.content);
+			$(".home1_1_content .ly").html(results[0]._serverData.Preface);
+			$(".home1_1_content .sy").html(results[0]._serverData.mean);
+			$("#bibleStudy").show();
+		} else {
+			$(".home1_1_content .zw").html('当日暂未更新');
+			$("#bibleStudy").hide();
+		}
+	}).catch((error) => {
+	  console.error('查询失败：', error);
 	});
-	// // 创建一个数据查询
-	// var queryBuilder = Backendless.DataQueryBuilder.create();
-	
-	// // 按特定字段降序排列，并限制查询结果数量为 1
-	// queryBuilder.setSortBy(['created DESC']); // 根据 created 字段降序排列
-	// queryBuilder.setPageSize(1); // 设置查询结果数量为 1
-	// queryBuilder.setWhereClause('type = 2');
-	
-	// // 查询 writeTable 表的数据，获取最新的一条数据
-	// Backendless.Data.of('writeTable').find(queryBuilder)
-	//   .then(function(result) {
-	//     // 查询成功，result 包含了最新的一条数据
-	//     console.log('最新的一条数据:', result[0]); // 如果存在数据的话，最新的一条数据位于数组的第一个位置
-	// 	$(".home1_1_content .dd").html(result[0].Attribution)
-	// 	$(".home1_1_content .zw").html(result[0].content)
-	// 	$(".home1_1_content .ly").html(result[0].Preface)
-	// 	$(".home1_1_content .sy").html(result[0].mean)
-	//   })
-	//   .catch(function(error) {
-	//     // 查询失败，处理错误
-	//     console.error('查询失败:', error);
-	//   });
 }
+
+searchOpenCard();
+function searchOpenCard() {
+	const query = new AV.Query('openCardTable');
+	
+	// 设置查询条件
+	query.equalTo('userId', localStorage.getItem('fy_userId')); // 替换 userId 为你想要匹配的用户 ID
+	query.equalTo('readDate', formatDate(new Date())); // 替换 readDate 为你想要匹配的日期
+	
+	// 执行查询
+	query.find().then(results => {
+	  // 处理查询结果
+	  console.log('查询结果：', results);
+	  if(results.length>0) {
+		  bibleStudyIs = true;
+		  $("#bibleStudy").html('今日已打卡!');
+	  } else {
+		  bibleStudyIs = true;
+		  $("#bibleStudy").html('读经打卡！');
+	  }
+	}).catch(error => {
+	  // 处理查询错误
+	  console.error('查询出错：', error);
+	});
+}
+
+$("#bibleStudy").click(function(){
+	
+	if(!bibleStudyIs) {
+		var OpenCardTable = AV.Object.extend('openCardTable');
+		var openCardTable = new OpenCardTable();
+		
+		// 设置数据
+		openCardTable.set('userId', localStorage.getItem('fy_userId'));
+		openCardTable.set('djId', bibleStudyId);
+		openCardTable.set('readDate', formatDate(new Date()));
+		
+		// 保存数据到 LeanCloud 的 TestObject 表
+		openCardTable.save().then(function(object) {
+			bibleStudyIs = true;
+		  // 数据保存成功后的处理
+			alert('打卡成功！请继续保持！');
+			$("#bibleStudy").html('今日已打卡!');
+		}).catch(function(error) {
+		  // 数据保存失败后的处理
+		  console.error('Error while saving to LeanCloud:', error);
+		});
+		var OpenCardTable = AV.Object.extend('openCardTable');
+		var openCardTable = new OpenCardTable();
+		
+		// 设置数据
+		openCardTable.set('userId', localStorage.getItem('fy_userId'));
+		openCardTable.set('djId', bibleStudyId);
+		openCardTable.set('readDate', formatDate(new Date()));
+		
+		// 保存数据到 LeanCloud 的 TestObject 表
+		openCardTable.save().then(function(object) {
+			bibleStudyIs = true;
+		  // 数据保存成功后的处理
+			alert('打卡成功！请继续保持！');
+			$("#bibleStudy").html('今日已打卡!');
+		}).catch(function(error) {
+		  // 数据保存失败后的处理
+		  console.error('Error while saving to LeanCloud:', error);
+		});
+	} else {
+		alert('今日已打卡，无需重复操作！');
+	}
+
+})
   
-  
-  
-  
+
 /** 
  * 查询全部
  */
@@ -375,7 +446,7 @@ function addDiss(){
 /*********************热门原创阅读**********************/
 // hotRead();
 function hotRead(){
-	console.log(123);
+	// console.log(123);
 	
 	// // 创建一个数据查询
 	// var queryBuilder = Backendless.DataQueryBuilder.create();
@@ -425,6 +496,7 @@ function toWz_d(param){
 	localStorage.setItem("fy_type", $(param).data('type'));
 	localStorage.setItem("fy_name", $(param).data('title'));
 	localStorage.setItem("fy_index", $(param).data('index'));
+	localStorage.setItem("fy_id", $(param).data('id'));
 	
 	$("#childPage" , parent.document).hide();
 	$("#childPage2" , parent.document).show();
@@ -435,30 +507,57 @@ function toWz_d(param){
 
 function hotZz(){
 	
-	$.ajax({
-	  url: 'json/fy.json',
-	  dataType: 'json',
-	  success: function(data) {
-	    // 获取 JSON 文件中的数据
+	// $.ajax({
+	//   url: 'json/fy.json',
+	//   dataType: 'json',
+	//   success: function(data) {
+	//     // 获取 JSON 文件中的数据
 		
-		const result = getTop5ByReadNum(data);
-		// console.log(result);
+	// 	const result = getTop5ByReadNum(data);
+	// 	// console.log(result);
 		
-		var html = "";
-		for(var i=0;i<result.length;i++){
-			html += '<div class="home1_3d" data-title="'+result[i].title+'" data-index="'+result[i].index+'" data-type="'+result[i].type+'" onclick="toWz_d(this)" >';
-			html += '	<span>'+(i+1)+'</span>';
-			html += '	<span>'+result[i].title+'</span>';
-			html += '	<span>阅读量    : '+result[i].readNum+'</span>';
-			html += '</div>';
-		}
-		$(".home1_2content").html(html)
+	// 	var html = "";
+	// 	for(var i=0;i<result.length;i++){
+	// 		html += '<div class="home1_3d" data-title="'+result[i].title+'" data-index="'+result[i].index+'" data-type="'+result[i].type+'" onclick="toWz_d(this)" >';
+	// 		html += '	<span>'+(i+1)+'</span>';
+	// 		html += '	<span>'+result[i].title+'</span>';
+	// 		html += '	<span>阅读量    : '+result[i].readNum+'</span>';
+	// 		html += '</div>';
+	// 	}
+	// 	$(".home1_2content").html(html)
 	
-	    // 可以对 data 进行其他操作
-	  },
-	  error: function(xhr, status, error) {
-	    console.error('发生错误:', error);
-	  }
+	//     // 可以对 data 进行其他操作
+	//   },
+	//   error: function(xhr, status, error) {
+	//     console.error('发生错误:', error);
+	//   }
+	// });
+	
+	// 创建一个查询
+	const query = new AV.Query('readTable');
+	
+	// 根据 readNum 字段降序排列（大到小）
+	query.descending('readNum');
+	
+	// 限制查询结果返回前 10 条数据
+	query.limit(10);
+	
+	// 执行查询
+	query.find().then(result => {
+	  // 处理查询结果
+	  console.log('前 10 条数据：', result);
+	var html = "";
+	for(var i=0;i<result.length;i++){
+		html += '<div class="home1_3d" data-id="'+result[i].id+'" data-title="'+result[i]._serverData.title+'" data-index="'+result[i]._serverData.index+'" data-type="'+result[i]._serverData.type+'" onclick="toWz_d(this)" >';
+		html += '	<span>'+(i+1)+'</span>';
+		html += '	<span>'+result[i]._serverData.title+'</span>';
+		html += '	<span>阅读量    : '+result[i]._serverData.readNum+'</span>';
+		html += '</div>';
+	}
+	$(".home1_2content").html(html)
+	}).catch(error => {
+	  // 处理查询错误
+	  console.error('查询出错：', error);
 	});
 	
 	
@@ -557,6 +656,57 @@ function toWz_z(param){
 /********************数据统计*********************/
 
 function showStatistics(){
+	
+	// 获取当前日期的时间戳
+	const today = new Date();
+	today.setHours(0, 0, 0, 0); // 设置为当日零点
+	const todayStart = Math.floor(today.getTime() / 1000); // 当日开始时间的 Unix 时间戳
+	
+	// 创建一个查询
+	const query = new AV.Query('logTable');
+	
+	// 查询当日数据
+	query.greaterThanOrEqualTo('createdAt', new Date(todayStart * 1000)); // 查询 createdAt 大于或等于当日开始时间的数据
+	
+	query.count().then(todayCount => {
+	  console.log('当日数据量：', todayCount);
+	  $(".drFw").html(todayCount);
+	
+	  // 查询历史总数据
+	  const totalQuery = new AV.Query('logTable');
+	  totalQuery.count().then(totalCount => {
+	    console.log('历史总数据量：', totalCount);
+		$(".lsFw").html(totalCount);
+	  }).catch(error => {
+	    console.error('查询历史总数据出错：', error);
+	  });
+	}).catch(error => {
+	  console.error('查询当日数据出错：', error);
+	});
+	
+	
+	// 创建一个查询
+	const queryx = new AV.Query('readRecord');
+	
+	// 查询当日数据
+	queryx.greaterThanOrEqualTo('createdAt', new Date(todayStart * 1000)); // 查询 createdAt 大于或等于当日开始时间的数据
+	
+	queryx.count().then(todayCount => {
+	  console.log('当日数据量：', todayCount);
+	  $(".drYd").html(todayCount);
+	
+	  // 查询历史总数据
+	  const totalQueryx = new AV.Query('readRecord');
+	  totalQueryx.count().then(totalCount => {
+	    console.log('历史总数据量：', totalCount);
+		$(".lsYd").html(totalCount);
+	  }).catch(error => {
+	    console.error('查询历史总数据出错：', error);
+	  });
+	}).catch(error => {
+	  console.error('查询当日数据出错：', error);
+	});
+	
 	// var start = new Date(new Date(new Date().toLocaleDateString()).getTime()).getTime();
 	// console.log(start);
 	
@@ -579,44 +729,44 @@ function showStatistics(){
 	//     console.error('查询失败:', error);
 	//   });
 	
-	$.ajax({
-	  url: 'json/readRecord.json',
-	  dataType: 'json',
-	  success: function(result) {
-		// 获取当前时间戳
-		// 获取当前时间的时间戳
-		const currentTimeStamp = Date.now();
+	// $.ajax({
+	//   url: 'json/readRecord.json',
+	//   dataType: 'json',
+	//   success: function(result) {
+	// 	// 获取当前时间戳
+	// 	// 获取当前时间的时间戳
+	// 	const currentTimeStamp = Date.now();
 		
-		// 获取昨天的时间戳
-		const oneDayMilliseconds = 24 * 60 * 60 * 1000; // 一天的毫秒数
-		const yesterdayTimeStamp = currentTimeStamp - oneDayMilliseconds;
+	// 	// 获取昨天的时间戳
+	// 	const oneDayMilliseconds = 24 * 60 * 60 * 1000; // 一天的毫秒数
+	// 	const yesterdayTimeStamp = currentTimeStamp - oneDayMilliseconds;
 		
-		// 获取昨天 00:00:00 的时间戳
-		const yesterdayStart = new Date(yesterdayTimeStamp);
-		yesterdayStart.setHours(0, 0, 0, 0);
-		const yesterdayStartTimeStamp = yesterdayStart.getTime();
+	// 	// 获取昨天 00:00:00 的时间戳
+	// 	const yesterdayStart = new Date(yesterdayTimeStamp);
+	// 	yesterdayStart.setHours(0, 0, 0, 0);
+	// 	const yesterdayStartTimeStamp = yesterdayStart.getTime();
 		
-		// 获取昨天 23:59:59 的时间戳
-		const yesterdayEnd = new Date(yesterdayTimeStamp);
-		yesterdayEnd.setHours(23, 59, 59, 999);
-		const yesterdayEndTimeStamp = yesterdayEnd.getTime();
+	// 	// 获取昨天 23:59:59 的时间戳
+	// 	const yesterdayEnd = new Date(yesterdayTimeStamp);
+	// 	yesterdayEnd.setHours(23, 59, 59, 999);
+	// 	const yesterdayEndTimeStamp = yesterdayEnd.getTime();
 		
-		// 给定的数据
-		const data = result;
+	// 	// 给定的数据
+	// 	const data = result;
 		
-		// 计算昨天 00:00:00 到 23:59:59 的数据条数
-		const yesterdayData = data.filter(
-		  (item) => item.created >= yesterdayStartTimeStamp && item.created <= yesterdayEndTimeStamp
-		);
+	// 	// 计算昨天 00:00:00 到 23:59:59 的数据条数
+	// 	const yesterdayData = data.filter(
+	// 	  (item) => item.created >= yesterdayStartTimeStamp && item.created <= yesterdayEndTimeStamp
+	// 	);
 		
-		console.log(`昨日数据条数：${yesterdayData.length}`);
-		$(".drYd").html(yesterdayData.length);
-		$(".lsYd").html(result.length);
-	  },
-	  error: function(xhr, status, error) {
-	    console.error('发生错误:', error);
-	  }
-	});
+	// 	// console.log(`昨日数据条数：${yesterdayData.length}`);
+	// 	$(".drYd").html(yesterdayData.length);
+	// 	$(".lsYd").html(result.length);
+	//   },
+	//   error: function(xhr, status, error) {
+	//     console.error('发生错误:', error);
+	//   }
+	// });
 	  
 	
 	  
@@ -871,9 +1021,9 @@ function histroyRead() {
 	
 		
 	    // 输出每个 flag 值对应的数据条数
-	    for (var flag in flagCount) {
-	      console.log(`Flag 值为 ${flag} 的数据条数: ${flagCount[flag]}`);
-	    }
+	    // for (var flag in flagCount) {
+	    //   console.log(`Flag 值为 ${flag} 的数据条数: ${flagCount[flag]}`);
+	    // }
 		hotZz();
 		showStatistics();
 	    // 可以对 data 进行其他操作
@@ -885,3 +1035,194 @@ function histroyRead() {
 }
 
 
+/**
+ * 登录验证模块
+ */
+var TYPE_LOGIN = 1;
+
+if (localStorage.getItem("fy_userName")) {
+	// 说明登录过，可直接访问
+} else {
+	// 说明没有登录过，显示登录模态框
+	$('#exampleModal').modal('show');
+}
+
+$("#typeButton").click(function() {
+	if(TYPE_LOGIN == 1) {
+		$("#typeButton").html('立即登录');
+		$(".modal-title").html('用户注册');
+		$("#nickDiv").show();
+		TYPE_LOGIN = 2;
+	} else if(TYPE_LOGIN == 2) {
+		$("#typeButton").html('立即注册');
+		$(".modal-title").html('用户登录');
+		$("#nickDiv").hide();
+		TYPE_LOGIN = 1;
+	}
+})
+
+
+$('#saveButton').click(function() {
+	var nickname = $('#nickname').val();
+	var username = $('#username').val();
+	var password = $('#password').val();
+	
+	// 用户登录
+	if(TYPE_LOGIN == 1) {
+		var username = $('#username').val();
+		// 填写完整，访问是否存在重复
+		// 假设你有一个 User 表
+		var query = new AV.Query('user');
+		
+		// 设置查询条件
+		query.equalTo('userName', username);
+		
+		// 查询操作
+		query.find().then((results) => {
+		  if (results.length > 0) {
+			var real_user = results[0]._serverData.userName;
+			var real_pwd = results[0]._serverData.pwd;
+			console.log(results);
+			console.log(results[0]._serverData.userName);
+			console.log(results[0].id);
+		    if(real_user === username && real_pwd === password) {
+				doLogRecord(results[0].id,results[0]._serverData.nickname);
+			} else {
+				alert('用户名密码错误！');
+			}
+		  } else {
+		     alert('该用户不存在！');
+		  }
+		}).catch((error) => {
+		  console.error('查询失败：', error);
+		});
+	} else if(TYPE_LOGIN == 2) {
+		if (nickname.trim() === '' || username.trim() === '' || password.trim() === '') {
+		  alert('请填写完整！');
+		} else {
+			// 填写完整，访问是否存在重复
+			// 假设你有一个 User 表
+			var query = new AV.Query('user');
+			
+			// 设置查询条件
+			// query.equalTo('userName', username);
+			query.equalTo('nickname', nickname);
+			
+			// 查询操作
+			query.find().then((results) => {
+			  if (results.length > 0) {
+			     alert('昵称已被占用，请修改昵称！');
+			  } else {
+			    to_pd_UserName();
+			  }
+			}).catch((error) => {
+			  console.error('查询失败：', error);
+			});
+		}
+	}
+});
+
+function to_pd_UserName() {
+	var username = $('#username').val();
+	// 填写完整，访问是否存在重复
+	// 假设你有一个 User 表
+	var query = new AV.Query('user');
+	
+	// 设置查询条件
+	query.equalTo('userName', username);
+	
+	// 查询操作
+	query.find().then((results) => {
+	  if (results.length > 0) {
+	     alert('用户名已被占用，请修改用户名！');
+	  } else {
+	    doSave();
+	  }
+	}).catch((error) => {
+	  console.error('查询失败：', error);
+	});
+}
+
+// 新增用户
+function doSave() {
+	
+	var nickname = $('#nickname').val();
+	var username = $('#username').val();
+	var password = $('#password').val();
+	
+    // 创建一个 user 对象
+    var User = AV.Object.extend('user');
+    var userTable= new User();
+    
+    // 设置数据
+    userTable.set('userName', username);
+	userTable.set('nickname', nickname);
+	userTable.set('pwd', password);
+    
+    // 保存数据到 LeanCloud 的 TestObject 表
+    userTable.save().then(function(object) {
+		console.log(object)
+      // 数据保存成功后的处理
+		doLogRecord(object.objectId,nickname);
+    }).catch(function(error) {
+      // 数据保存失败后的处理
+      console.error('Error while saving to LeanCloud:', error);
+    });
+}
+// 执行新增访问记录
+function doLogRecord(id,nick) {
+	// var nickname = $('#nickname').val();
+	var username = $('#username').val();
+	// 创建一个 user 对象
+	var LogTable = AV.Object.extend('logTable');
+	var logTable = new LogTable();
+	
+	// 设置数据
+	logTable.set('userName', username);
+	logTable.set('nickname', nick);
+	logTable.set('userId', id);
+	logTable.set('logDate', formatDTime2(new Date()));
+	
+	// 保存数据到 LeanCloud 的 TestObject 表
+	logTable.save().then(function(object) {
+	  // 数据保存成功后的处理
+		alert('欢迎进入！请尽情享受网页！')
+		$('#exampleModal').modal('hide');
+		
+		localStorage.setItem('fy_userName',username)
+		localStorage.setItem('fy_userId',id)
+		localStorage.setItem('fy_nickName',nick)
+	}).catch(function(error) {
+	  // 数据保存失败后的处理
+	  console.error('Error while saving to LeanCloud:', error);
+	});
+}
+
+doLogRecord2();
+function doLogRecord2() {
+	if(localStorage.getItem('fy_userName')) {
+		const query = new AV.Query('logTable');
+		
+		// 设置查询条件
+		query.equalTo('userId', localStorage.getItem('fy_userId')); // 替换 userId 为你想要匹配的用户 ID
+		query.equalTo('logDate', formatDate(new Date())); // 替换 readDate 为你想要匹配的日期
+		
+		// 执行查询
+		query.find().then(results => {
+		  // 处理查询结果
+		  console.log('查询结果：', results);
+		  if(results.length>0) { // 已记录
+			  // bibleStudyIs = true;
+			  // $("#bibleStudy").html('今日已打卡!');
+		  } else {
+			  $('#username').val(localStorage.getItem('fy_userName'));
+			  doLogRecord(localStorage.getItem('fy_userId'),localStorage.getItem('fy_nickName'))
+			  // bibleStudyIs = true;
+			  // $("#bibleStudy").html('读经打卡！');
+		  }
+		}).catch(error => {
+		  // 处理查询错误
+		  console.error('查询出错：', error);
+		});
+	}
+}

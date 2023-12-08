@@ -75,16 +75,60 @@ function back(){
 	// $(".head,.footer").show();
 }
 
-  Backendless.Data.of( "readTable" ).save({ 
-	  flag: localStorage.fy_type + '_' + localStorage.fy_index,
-	  title: localStorage.fy_name,
-  } )
-      .then( function( obj ) {
-          console.log( "object saved. objectId " + obj.objectId )
-      } )
-      .catch( function( error ) {
-          console.log( "got error - " + error )
-      })
+
+var ReadRecord = AV.Object.extend('readRecord');
+var readRecord = new ReadRecord();
+
+// 设置数据
+readRecord.set('userId', localStorage.fy_userId);
+readRecord.set('userName', localStorage.fy_userName);
+
+readRecord.set('index', localStorage.fy_index);
+readRecord.set('type', localStorage.fy_type);
+readRecord.set('title', localStorage.fy_name);
+readRecord.set('readDate', formatDTime2(new Date()));
+
+// 保存数据到 LeanCloud 的 TestObject 表
+readRecord.save().then(function(object) {
+	
+}).catch(function(error) {
+  // 数据保存失败后的处理
+  console.error('Error while saving to LeanCloud:', error);
+});
+
+
+
+const query = new AV.Query('readTable');
+query.get(localStorage.fy_id).then(object => {
+  // 读取当前 readNum 的值
+  let readNum = object.get('readNum');
+  
+  // 将 readNum 值加 1
+  readNum++;
+
+  // 更新对象的 readNum 字段
+  object.set('readNum', readNum);
+
+  // 保存更新到 LeanCloud 数据库
+  return object.save();
+}).then(updatedObject => {
+  console.log('成功更新 readNum 字段:', updatedObject);
+}).catch(error => {
+  console.error('更新字段失败:', error);
+});
+
+
+
+  // Backendless.Data.of( "readTable" ).save({ 
+	 //  flag: localStorage.fy_type + '_' + localStorage.fy_index,
+	 //  title: localStorage.fy_name,
+  // } )
+  //     .then( function( obj ) {
+  //         console.log( "object saved. objectId " + obj.objectId )
+  //     } )
+  //     .catch( function( error ) {
+  //         console.log( "got error - " + error )
+  //     })
 
 // var APP_ID = '{{appid}}';
 // var APP_KEY = '{{appkey}}';

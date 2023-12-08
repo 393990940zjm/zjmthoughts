@@ -97,89 +97,97 @@ window.operateEvents = {
 
 showTable();
 function showTable() {
-// 	$('#table').bootstrapTable('destroy').bootstrapTable({
-// //		url : subURL('equipmentCapacity/search.action'), //请求后台的URL（*）  
-// 		dataType:'jsonp',
-// //		striped : false, // 是否显示行间隔色
-// 		pagination : false, // 是否显示分页（*）
-// //		sortable : false, // 是否启用排序
-// //		sortOrder : "asc", // 排序方式
-// //      toolbar:"#toolbar",
-// 		pageNumber : 1, // 初始化加载第一页，默认第一页
-// 		pageSize : 99999, // 每页的记录行数（*）
-// //		pageList : [ 10, 25, 50, 100 ], // 可供选择的每页的行数（*）
-// 		strictSearch : true,
-// 		clickToSelect : true, // 是否启用点击选中行
-// 		height : $(window).height()-55, // 行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
-// 		columns : [ 
-//        {
-// 	       	field : '',
-// 	       	title : '',
-// 	       	align:"center",
-// 	       	valign:'middle',
-// 	       	formatter:operate,
-// 	       	events : operateEvents
-//        }
-// 		],
-// 		onLoadSuccess : function(data) {
-
-// 		}
-// 	});
+	// 创建一个查询
+	const query = new AV.Query('readTable');
 	
-	$.ajax({
-	  url: 'json/fy.json',
-	  dataType: 'json',
-	  success: function(data) {
-	    // 获取 JSON 文件中的数据
-		console.log(eval('data.type' + localStorage.getItem("fy_type")))
-		var result = eval('data.type' + localStorage.getItem("fy_type"))
-		
-		var html = "";
-		
-		for(var i=0;i<result.length;i++) {
-			var readArr = JSON.parse(localStorage.getItem("readArr"));
-			// console.log(777,readArr);
-			for(const key2 in readArr) {
-				// console.log(666, data[key][i]);
-				var keyData = key2.split('_');
-				var type = keyData[0];
-				var index = keyData[1];
-				var num = readArr[key2];
-				if(result[i].index == index && result[i].type == type) {
-					result[i].readNum = num;
-				}
-			}
-		}
-		
-		
-		for(var i=0;i<result.length;i++) {
-			
-			if(result[i].index > 0) {
-				html +="<div class='task' data-title='"+result[i].title+"' data-index='"+result[i].index+"' onclick='myFunction(this)' >"
-				html +="  <div class='task_title' ><span>"+result[i].title+"</span></div>";
-				html +="  <div class='task_num'><span>历史阅读次数 : </span><span>"+result[i].readNum+"</span></div>";
-				// html +="  <div class='task_time'><span>发布时间 : </span><span>"+formatDTime2(row.created)+"</span></div>";
-				html +="</div>";
-			} else {
-				html +="<div class='tasks' >"
-				html +="  <div class='task_title' ><span>"+result[i].title+"</span></div>";
-				html +="</div>";
-			}
-		}
-		
-		$("#article1").html(html);
-		// $('#table').bootstrapTable('load',result);
-		// $(".home1_1_content .dd").html(data.wirteData[0].Attribution);
-		// $(".home1_1_content .zw").html(data.wirteData[0].content);
-		// $(".home1_1_content .ly").html(data.wirteData[0].Preface);
-		// $(".home1_1_content .sy").html(data.wirteData[0].mean);
+	// 设置查询条件，假设要查询 type 为 '某个值' 的数据
+	query.equalTo('type', Number(localStorage.getItem("fy_type"))); // 替换 '某个值' 为实际要查询的值
 	
-	    // 可以对 data 进行其他操作
-	  },
-	  error: function(xhr, status, error) {
-	    console.error('发生错误:', error);
+	// 执行查询
+	query.find().then(result => {
+	  // 处理查询结果
+	  console.log('满足条件的数据：', result);
+	  var html = '';
+	  for(var i=0;i<result.length;i++) {
+	  	
+	  	if(result[i]._serverData.index > 0) {
+	  		html +="<div class='task' data-id='"+result[i].id+"'   data-title='"+result[i]._serverData.title+"' data-index='"+result[i]._serverData.index+"' data-type='"+result[i]._serverData.type+"' onclick='myFunction(this)' >"
+	  		html +="  <div class='task_title' ><span>"+result[i]._serverData.title+"</span></div>";
+	  		html +="  <div class='task_num'><span>历史阅读数 : </span><span>"+result[i]._serverData.readNum+"</span></div>";
+	  		// html +="  <div class='task_time'><span>发布时间 : </span><span>"+formatDTime2(row.created)+"</span></div>";
+	  		html +="</div>";
+	  	} else {
+	  		html +="<div class='tasks' >"
+	  		html +="  <div class='task_title' ><span>"+result[i]._serverData.title+"</span></div>";
+	  		html +="</div>";
+	  	}
 	  }
+	  
+	  $("#article1").html(html);
+	}).catch(error => {
+	  // 处理查询错误
+	  console.error('查询出错：', error);
 	});
+
+
+
+
+
+	
+	// $.ajax({
+	//   url: 'json/fy.json',
+	//   dataType: 'json',
+	//   success: function(data) {
+	//     // 获取 JSON 文件中的数据
+	// 	console.log(eval('data.type' + localStorage.getItem("fy_type")))
+	// 	var result = eval('data.type' + localStorage.getItem("fy_type"))
+		
+	// 	var html = "";
+		
+	// 	for(var i=0;i<result.length;i++) {
+	// 		var readArr = JSON.parse(localStorage.getItem("readArr"));
+	// 		// console.log(777,readArr);
+	// 		for(const key2 in readArr) {
+	// 			// console.log(666, data[key][i]);
+	// 			var keyData = key2.split('_');
+	// 			var type = keyData[0];
+	// 			var index = keyData[1];
+	// 			var num = readArr[key2];
+	// 			if(result[i].index == index && result[i].type == type) {
+	// 				result[i].readNum = num;
+	// 			}
+	// 		}
+	// 	}
+		
+		
+	// 	for(var i=0;i<result.length;i++) {
+			
+	// 		if(result[i].index > 0) {
+	// 			html +="<div class='task' data-title='"+result[i].title+"' data-index='"+result[i].index+"' onclick='myFunction(this)' >"
+	// 			html +="  <div class='task_title' ><span>"+result[i].title+"</span></div>";
+	// 			html +="  <div class='task_num'><span>历史阅读次数 : </span><span>"+result[i].readNum+"</span></div>";
+	// 			// html +="  <div class='task_time'><span>发布时间 : </span><span>"+formatDTime2(row.created)+"</span></div>";
+	// 			html +="</div>";
+	// 		} else {
+	// 			html +="<div class='tasks' >"
+	// 			html +="  <div class='task_title' ><span>"+result[i].title+"</span></div>";
+	// 			html +="</div>";
+	// 		}
+	// 	}
+		
+	// 	$("#article1").html(html);
+	// 	// $('#table').bootstrapTable('load',result);
+	// 	// $(".home1_1_content .dd").html(data.wirteData[0].Attribution);
+	// 	// $(".home1_1_content .zw").html(data.wirteData[0].content);
+	// 	// $(".home1_1_content .ly").html(data.wirteData[0].Preface);
+	// 	// $(".home1_1_content .sy").html(data.wirteData[0].mean);
+	
+	//     // 可以对 data 进行其他操作
+	//   },
+	//   error: function(xhr, status, error) {
+	//     console.error('发生错误:', error);
+	//   }
+	// });
 	
 	// var queryBuilder = Backendless.DataQueryBuilder.create();
 	
@@ -222,8 +230,10 @@ function showTable() {
 };
 
 function myFunction(param) {
+	localStorage.setItem("fy_type", $(param).data('type'));
 	localStorage.setItem("fy_name", $(param).data('title'));
 	localStorage.setItem("fy_index", $(param).data('index'));
+	localStorage.setItem("fy_id", $(param).data('id'));
 	
 	$("#childPage" , parent.document).hide();
 	$("#childPage2" , parent.document).show();
