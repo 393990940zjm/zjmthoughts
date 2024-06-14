@@ -113,7 +113,7 @@ function showTable() {
 	  	if(result[i]._serverData.index > 0) {
 	  		html +="<div class='task' data-id='"+result[i].id+"'   data-title='"+result[i]._serverData.title+"' data-index='"+result[i]._serverData.index+"' data-type='"+result[i]._serverData.type+"' onclick='myFunction(this)' >"
 	  		html +="  <div class='task_title' ><span>"+result[i]._serverData.title+"</span></div>";
-	  		html +="  <div class='task_num'><span>历史阅读数 : </span><span>"+result[i]._serverData.readNum+"</span></div>";
+	  		html +="  <div class='task_num'><span>阅读数 : </span><span>"+result[i]._serverData.readNum+"</span></div>";
 	  		// html +="  <div class='task_time'><span>发布时间 : </span><span>"+formatDTime2(row.created)+"</span></div>";
 	  		html +="</div>";
 	  	} else {

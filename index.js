@@ -1,26 +1,26 @@
-window.onload = function(){
- //屏蔽键盘事件
- document.onkeydown = function (){
-	 var e = window.event || arguments[0];
-	//F12
-	 if(e.keyCode == 123){
-		 return false;
-	 //Ctrl+Shift+I
-	 }else if((e.ctrlKey) && (e.shiftKey) && (e.keyCode == 73)){
-		 return false;
-	 //Shift+F10
-	 }else if((e.shiftKey) && (e.keyCode == 121)){
-		 return false;
-	 //Ctrl+U
-	 }else if((e.ctrlKey) && (e.keyCode == 85)){
-		 return false;
-	 }
- };
- //屏蔽鼠标右键
- document.oncontextmenu = function (){
-	 return false;
- }
-}
+// window.onload = function(){
+//  //屏蔽键盘事件
+//  document.onkeydown = function (){
+// 	 var e = window.event || arguments[0];
+// 	//F12
+// 	 if(e.keyCode == 123){
+// 		 return false;
+// 	 //Ctrl+Shift+I
+// 	 }else if((e.ctrlKey) && (e.shiftKey) && (e.keyCode == 73)){
+// 		 return false;
+// 	 //Shift+F10
+// 	 }else if((e.shiftKey) && (e.keyCode == 121)){
+// 		 return false;
+// 	 //Ctrl+U
+// 	 }else if((e.ctrlKey) && (e.keyCode == 85)){
+// 		 return false;
+// 	 }
+//  };
+//  //屏蔽鼠标右键
+//  document.oncontextmenu = function (){
+// 	 return false;
+//  }
+// }
 
 var bibleStudyId = '';
 var bibleStudyIs = false;
@@ -185,20 +185,20 @@ $("#bibleStudy").click(function(){
 		var openCardTable = new OpenCardTable();
 		
 		// 设置数据
-		openCardTable.set('userId', localStorage.getItem('fy_userId'));
-		openCardTable.set('djId', bibleStudyId);
-		openCardTable.set('readDate', formatDate(new Date()));
+		// openCardTable.set('userId', localStorage.getItem('fy_userId'));
+		// openCardTable.set('djId', bibleStudyId);
+		// openCardTable.set('readDate', formatDate(new Date()));
 		
-		// 保存数据到 LeanCloud 的 TestObject 表
-		openCardTable.save().then(function(object) {
-			bibleStudyIs = true;
-		  // 数据保存成功后的处理
-			alert('打卡成功！请继续保持！');
-			$("#bibleStudy").html('今日已打卡!');
-		}).catch(function(error) {
-		  // 数据保存失败后的处理
-		  console.error('Error while saving to LeanCloud:', error);
-		});
+		// // 保存数据到 LeanCloud 的 TestObject 表
+		// openCardTable.save().then(function(object) {
+		// 	bibleStudyIs = true;
+		//   // 数据保存成功后的处理
+		// 	alert('打卡成功！请继续保持！');
+		// 	$("#bibleStudy").html('今日已打卡!');
+		// }).catch(function(error) {
+		//   // 数据保存失败后的处理
+		//   console.error('Error while saving to LeanCloud:', error);
+		// });
 	} else {
 		alert('今日已打卡，无需重复操作！');
 	}
@@ -292,10 +292,6 @@ function showTable() {
 // 	});
 var directoryData = [
 	{
-		name: "主日传道",
-		type: 7
-	},
-	{
 		name: "诗篇三十首",
 		type: 3
 	},
@@ -304,13 +300,18 @@ var directoryData = [
 		type: 4
 	},
 	{
-		name: "简读圣经",
+		name: "简读圣经-旧约",
 		type: 5
 	},
 	{
-		name: "教会历史",
+		name: "简读圣经-新约",
 		type: 6
+	},
+	{
+		name: "教会历史",
+		type: 7
 	}
+	
 ]
 	var html = "";
 	for(var i=0;i<directoryData.length;i++) {
@@ -549,7 +550,17 @@ function hotZz(){
 	var html = "";
 	for(var i=0;i<result.length;i++){
 		html += '<div class="home1_3d" data-id="'+result[i].id+'" data-title="'+result[i]._serverData.title+'" data-index="'+result[i]._serverData.index+'" data-type="'+result[i]._serverData.type+'" onclick="toWz_d(this)" >';
-		html += '	<span>'+(i+1)+'</span>';
+		
+		if(i==0) {
+			html += '	<span style="background:red;" >'+(i+1)+'</span>';
+		} else if (i==1) {
+			html += '	<span style="background:orange;" >'+(i+1)+'</span>';
+		} else if (i==2) {
+			html += '	<span style="background:#b4d802;" >'+(i+1)+'</span>';
+		} else {
+			html += '	<span>'+(i+1)+'</span>';
+		}
+		
 		html += '	<span>'+result[i]._serverData.title+'</span>';
 		html += '	<span>阅读量    : '+result[i]._serverData.readNum+'</span>';
 		html += '</div>';

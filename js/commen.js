@@ -40,7 +40,7 @@ async function showDiss(){
 			html += ' <p>'+mergedData[i].userData.nickname+'<span style="margin:0 5px;" >于</span>'+formatDTime2(mergedData[i].commentData._serverData.addDate)+'评论</p>';
 	    	html += ' <p>'+mergedData[i].commentData._serverData.content+'</p>';
 			if(mergedData[i].userData.objectId == localStorage.getItem('fy_userId')) {
-				html += ' <button class="btn btn-danger btn-sm removeBtn" >删除</button>';
+				html += ' <button class="btn btn-danger btn-sm removeBtn" data-id="'+mergedData[i].commentData.id+'" onClick="doDelete(this)" >删除</button>';
 			}
 	    	html += '</div>';
 	    }
@@ -91,27 +91,32 @@ async function showDiss(){
 	// }); 
 }
 
-// 示例异步函数
-function performAsyncOperation(results) {
-  const queryx = new AV.Query('user');
-  
-  // 设置查询条件
-  queryx.equalTo('objectId', results[i]._serverData.userId); // 替换 userId 为你想要匹配的用户 ID
-  
-  // 执行查询
-  queryx.find().then(resultsx => {
-    // 处理查询结果
-    console.log('查询结果：', resultsx);
-    var html = '';
-    html += '<div>';
-    html += ' <p>'+resultsx[0]._serverData.nickname+'</p>';
-   
-   return "666";
-  
-  }).catch(error => {
-    // 处理查询错误
-    console.error('查询出错：', error);
-  });  
+function doDelete(param){
+	
+	// 显示确认提示框
+	  const confirmed = confirm('确定要删除这个评论吗？');
+	
+	  // 如果用户点击了确定
+	  if (confirmed) {
+	    // 在这里执行删除操作，比如向服务器发送删除请求等
+	    const query = new AV.Query('commenTable');
+	    
+	    // 根据对象的 ID 查询要删除的对象
+	    query.get( $(param).data('id')).then(object => {
+	      // 调用 destroy 方法删除对象
+	      return object.destroy();
+	    }).then(deletedObject => {
+			$(param).parent().remove();
+			alert('删除成功！');
+	    }).catch(error => {
+	      console.error('删除失败:', error);
+	    });
+	  } else {
+	    // 如果用户点击了取消
+	    console.log('删除操作已取消');
+	  }
+	
+	
 }
 
 function addDiss(){

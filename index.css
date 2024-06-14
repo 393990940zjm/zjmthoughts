@@ -110,10 +110,10 @@ th{
 	    letter-spacing: 3px;
 	    text-align: center;
 	    float: left;
-	    width: 45%;
-	    height: 100px;
-	    line-height: 100px;
-	    margin: 2.5%;
+	    width: 100%;
+	    height: 66px;
+	    line-height: 66px;
+	    /* margin: 2.5%; */
 	    font-weight: bold;
 	/* text-align: left; */
     /* border: 1px solid #ddd; */
