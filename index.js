@@ -1174,7 +1174,7 @@ function doSave() {
     userTable.save().then(function(object) {
 		console.log(object)
       // 数据保存成功后的处理
-		doLogRecord(object.objectId,nickname);
+		doLogRecord(object.id,nickname);
     }).catch(function(error) {
       // 数据保存失败后的处理
       console.error('Error while saving to LeanCloud:', error);
@@ -1208,7 +1208,9 @@ function doLogRecord(id,nick) {
 	  console.error('Error while saving to LeanCloud:', error);
 	});
 }
-
+/**
+ * 添加访问记录
+ */
 doLogRecord2();
 function doLogRecord2() {
 	if(localStorage.getItem('fy_userName')) {

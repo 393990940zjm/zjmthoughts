@@ -81,6 +81,7 @@ var readRecord = new ReadRecord();
 // 设置数据
 readRecord.set('userId', localStorage.fy_userId);
 readRecord.set('userName', localStorage.fy_userName);
+readRecord.set('nicename', localStorage.fy_nickName);
 
 readRecord.set('index', localStorage.fy_index);
 readRecord.set('type', localStorage.fy_type);

@@ -17,20 +17,20 @@
 	});
 
     // 创建一个 TestObject 对象
-    var TestObject = AV.Object.extend('TestObject');
-    var testObject = new TestObject();
+    // var TestObject = AV.Object.extend('TestObject');
+    // var testObject = new TestObject();
     
-    // 设置数据
-    testObject.set('foo', 'bar');
+    // // 设置数据
+    // testObject.set('foo', 'bar');
     
-    // 保存数据到 LeanCloud 的 TestObject 表
-    testObject.save().then(function(object) {
-      // 数据保存成功后的处理
-      console.log('LeanCloud Object saved with objectId: ' + object.id);
-    }).catch(function(error) {
-      // 数据保存失败后的处理
-      console.error('Error while saving to LeanCloud:', error);
-    });
+    // // 保存数据到 LeanCloud 的 TestObject 表
+    // testObject.save().then(function(object) {
+    //   // 数据保存成功后的处理
+    //   console.log('LeanCloud Object saved with objectId: ' + object.id);
+    // }).catch(function(error) {
+    //   // 数据保存失败后的处理
+    //   console.error('Error while saving to LeanCloud:', error);
+    // });
 	
 	// 定义每页的数据量
 	// var pageSize = 1000;

@@ -37,9 +37,9 @@ async function showDiss(){
 		var html = '';
 	    for(var i=0;i<mergedData.length;i++){
 	    	html += '<div>';
-			html += ' <p>'+mergedData[i].userData.nickname+'<span style="margin:0 5px;" >于</span>'+formatDTime2(mergedData[i].commentData._serverData.addDate)+'评论</p>';
+			html += ' <p>'+mergedData[i].commentData._serverData.nickname+'<span style="margin:0 5px;" >于</span>'+formatDTime2(mergedData[i].commentData._serverData.addDate)+'评论</p>';
 	    	html += ' <p>'+mergedData[i].commentData._serverData.content+'</p>';
-			if(mergedData[i].userData.objectId == localStorage.getItem('fy_userId')) {
+			if(mergedData[i].commentData._serverData.userId == localStorage.getItem('fy_userId')) {
 				html += ' <button class="btn btn-danger btn-sm removeBtn" data-id="'+mergedData[i].commentData.id+'" onClick="doDelete(this)" >删除</button>';
 			}
 	    	html += '</div>';
@@ -131,6 +131,7 @@ function addDiss(){
 		// 设置数据
 		commenTable.set('userId', localStorage.fy_userId);
 		commenTable.set('userName', localStorage.fy_userName);
+		commenTable.set('nickname', localStorage.fy_nickName);
 		
 		commenTable.set('readId', localStorage.fy_id);
 		commenTable.set('index', localStorage.fy_index);
