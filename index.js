@@ -1211,7 +1211,7 @@ function doLogRecord(id,nick) {
 /**
  * 添加访问记录
  */
-doLogRecord2();
+// doLogRecord2();
 function doLogRecord2() {
 	if(localStorage.getItem('fy_userName')) {
 		const query = new AV.Query('logTable');
@@ -1239,3 +1239,20 @@ function doLogRecord2() {
 		});
 	}
 }
+
+$(".head0_d").click(function(){
+	location.reload();
+})
+
+$(".logout").click(function(){
+	const confirmed = confirm('是否退出登录？');
+		
+	// 如果用户点击了确定
+	if (confirmed) {
+	 window.localStorage.clear();
+	 location.reload();
+	} else {
+	  // 如果用户点击了取消
+	  console.log('删除操作已取消');
+	}
+})
