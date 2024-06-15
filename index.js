@@ -1211,7 +1211,7 @@ function doLogRecord(id,nick) {
 /**
  * 添加访问记录
  */
-// doLogRecord2();
+doLogRecord2();
 function doLogRecord2() {
 	if(localStorage.getItem('fy_userName')) {
 		const query = new AV.Query('logTable');
